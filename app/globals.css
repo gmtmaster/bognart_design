@@ -1,26 +1,471 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+
+@theme {
+  --color-yellow: #e7d393;
+  --color-white-100: #efefef;
+  --font-sans: "Mona Sans", sans-serif;
+  --font-modern-negra: "Modern Negra", sans-serif;
+  --font-serif: "DM Serif Text", serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  width: 100%;
+  background-color: #f4f1ec;
+  color: black;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+@utility col-center {
+  @apply flex flex-col justify-center items-center;
+}
+
+@utility abs-center {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+@utility text-gradient {
+  background: linear-gradient(to bottom, #ffffff, #898989);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility radial-gradient {
+  background: radial-gradient(
+          circle at center,
+          #434343 0%,
+          #000 50%,
+          transparent 100%
+  );
+}
+
+
+
+@layer components {
+  main {
+    @apply w-full overflow-x-hidden;
+  }
+
+  nav {
+    @apply fixed z-50 w-full text-black;
+
+    div {
+      @apply flex md:flex-row flex-col md:justify-between items-center gap-5 py-5 lg:px-0 px-5 container mx-auto;
+    }
+
+    p {
+      @apply font-modern-negra text-3xl -mb-2;
+    }
+
+    a {
+      @apply cursor-pointer text-nowrap md:text-base text-sm hover:text-red-900 ease-in-out transition-colors;
+    }
+
+    ul {
+      @apply flex-center lg:gap-12 gap-7;
+    }
+  }
+
+  .noisy {
+    @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
+  }
+
+  #hero {
+    @apply relative z-10 min-h-dvh w-full border border-transparent;
+
+    h1 {
+      @apply md:mt-32 mt-40 text-8xl md:text-[20vw] leading-none text-center font-modern-negra;
+    }
+
+
+    .body {
+      @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto md:top-[30vh] flex justify-between items-end px-5;
+
+      .content {
+        @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
+
+        p:nth-of-type(2) {
+          @apply font-modern-negra text-6xl text-yellow max-w-xl;
+        }
+
+        p:last-of-type {
+          @apply 2xl:text-start text-center;
+        }
+
+        .view-cocktails {
+          @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
+
+          p {
+            @apply text-left;
+          }
+
+          a {
+            @apply font-semibold opacity-80 2xl:text-start text-center hover:text-yellow;
+          }
+        }
+      }
+    }
+  }
+
+  video {
+    @apply w-full md:h-[80%] h-1/2 absolute bottom-0 left-0 md:object-contain object-bottom object-cover;
+  }
+
+  #cocktails {
+    @apply relative min-h-dvh w-full overflow-hidden;
+
+    #c-left-leaf {
+      @apply absolute left-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
+    }
+
+    #c-right-leaf {
+      @apply absolute right-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
+    }
+
+    .list {
+      @apply container mx-auto relative z-10 flex md:flex-row flex-col justify-between items-start gap-20 pt-40 2xl:px-0 px-5;
+
+      .popular {
+        @apply space-y-8 w-full md:w-fit;
+      }
+
+      .loved {
+        @apply space-y-8 w-full md:w-fit pb-20 md:pb-0;
+      }
+
+      h2 {
+        @apply text-xl font-medium;
+      }
+
+      ul {
+        @apply space-y-8;
+
+        li {
+          @apply flex justify-between items-start;
+
+          h3 {
+            @apply font-modern-negra 2xl:text-3xl text-xl text-yellow;
+          }
+
+          p {
+            @apply text-sm;
+          }
+
+          span {
+            @apply text-xl font-medium;
+          }
+        }
+      }
+    }
+  }
+
+  #about {
+    @apply min-h-screen py-28 2xl:px-0 px-5 container mx-auto;
+
+    .content {
+      @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
+
+      h2 {
+        @apply text-5xl md:text-6xl font-modern-negra max-w-lg;
+      }
+
+      .sub-content {
+        @apply md:col-span-4 space-y-5 flex flex-col justify-between;
+
+        p {
+          @apply text-lg;
+        }
+
+        div {
+          @apply flex flex-col justify-between md:gap-2 gap-5;
+
+          span {
+            @apply text-yellow font-bold text-5xl;
+          }
+        }
+      }
+    }
+
+    .badge {
+      @apply inline-block rounded-full bg-white text-black px-4 py-2 text-sm font-medium mb-8;
+    }
+
+    .top-grid {
+      @apply grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5 md:px-0 px-5;
+
+      > div {
+        @apply rounded-3xl overflow-hidden h-72 relative;
+      }
+
+      img {
+        @apply object-cover w-full h-full;
+      }
+    }
+
+    .bottom-grid {
+      @apply grid grid-cols-1 md:grid-cols-12 gap-5 md:px-0 px-5;
+
+      > div {
+        @apply rounded-3xl overflow-hidden h-72 relative;
+      }
+
+      img {
+        @apply object-cover w-full h-full;
+      }
+    }
+  }
+
+  #art {
+    @apply flex-center flex-col min-h-dvh p-5 mt-20 relative radial-gradient;
+
+    h2 {
+      @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[#505050] mb-8;
+    }
+
+    .content {
+      @apply flex md:flex-row flex-col justify-between md:mb-16 md:mt-0 mt-40 gap-10;
+    }
+
+
+
+    .masked-container {
+      h2 {
+        @apply text-4xl md:text-5xl font-modern-negra text-center mb-10 text-white mt-32;
+      }
+
+      div {
+        @apply opacity-0 md:px-0 px-5 space-y-5 absolute md:bottom-5 bottom-52 left-1/2 -translate-x-1/2;
+
+        h3 {
+          @apply md:text-5xl text-2xl text-center font-serif md:w-full w-80 text-white;
+        }
+
+        p {
+          @apply text-lg text-center;
+        }
+      }
+    }
+  }
+
+  #menu {
+    @apply relative w-full md:mt-40 mt-0 2xl:px-0 px-5 py-20 radial-gradient;
+
+
+
+    .content {
+      @apply flex flex-col justify-between items-center container mx-auto relative;
+
+      .arrows {
+        @apply flex items-center justify-between w-full absolute;
+
+        button {
+          @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
+
+          span {
+            @apply text-3xl font-modern-negra leading-none hidden md:block;
+          }
+        }
+      }
+    }
+
+    .cocktail {
+      @apply flex-center mt-10;
+
+      img {
+        @apply object-contain h-[60vh];
+      }
+    }
+
+    .recipe {
+      @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full lg:absolute bottom-0;
+
+      .info {
+        @apply space-y-4 lg:translate-y-20;
+
+        #title {
+          @apply font-modern-negra md:text-xl text-xl text-yellow max-w-40;
+        }
+      }
+
+      .details {
+        @apply space-y-5 md:max-w-md text-left;
+
+        h2 {
+          @apply md:text-5xl text-3xl font-serif;
+        }
+
+        p {
+          @apply md:text-lg pe-5;
+        }
+      }
+    }
+  }
+
+  #contact {
+    @apply relative md:mt-20 mt-0 px-4 text-center w-full overflow-hidden radial-gradient;
+
+    #f-left-leaf {
+      @apply absolute bottom-0 left-0 pointer-events-none lg:w-fit w-1/3;
+    }
+
+    #f-right-leaf {
+      @apply absolute top-0 right-0 pointer-events-none hidden lg:block;
+    }
+
+    .content {
+      @apply container mx-auto lg:py-14 2xl:py-32 py-16 flex flex-col justify-between gap-10 min-h-dvh;
+
+      h2 {
+        @apply lg:text-6xl 2xl:text-8xl text-5xl font-modern-negra md:translate-y-0 translate-y-5;
+      }
+
+      h3 {
+        @apply uppercase xl:text-base 2xl:text-lg text-base mb-2;
+      }
+
+      p {
+        @apply lg:text-2xl 2xl:text-3xl text-sm;
+      }
+    }
+
+    .drink-img {
+      @apply absolute bottom-0 right-0 lg:w-96 w-1/3 pointer-events-none;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* From Uiverse.io by gharsh11032000 */
+.button {
+  cursor: pointer;
+  position: relative;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: rgba(120, 53, 15, 0.3);
+  border: 2px solid rgba(120, 53, 15, 0.3);
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
 }
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: rgba(120, 53, 15, 0.3);
+  transition: all 0.6s cubic-bezier(120, 53, 15, 0.3);
+}
+
+.button:hover::before {
+  scale: 3;
+}
+
+.button:hover {
+  color: #ffffff;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(120, 53, 15, 0.3);
+}
+
+.button:active {
+  scale: 1;
+}
+
+.input {
+  rounded: 5px;
+  border: 2px solid rgba(120, 53, 15, 0.3);
+  padding: 10px 24px;
+  font-size: 18px;
+  color: black;
+  border-radius: 34px;
+  background-color: white;
+  font-weight: 300;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+
+}
+
+.button_send {
+  cursor: pointer;
+  position: relative;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: rgba(120, 53, 15, 0.3);
+  border: 2px solid rgba(120, 53, 15, 0.3);
+  border-radius: 34px;
+  background-color: white;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+.button_send::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: rgba(120, 53, 15, 0.3);
+  transition: all 0.6s cubic-bezier(120, 53, 15, 0.3);
+}
+
+.button_send:hover::before {
+  scale: 3;
+}
+
+.button_send:hover {
+  color: #ffffff;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(120, 53, 15, 0.3);
+}
+
+.button_send:active {
+  scale: 1;
+}
+
+svg{
+  position:absolute;
+  top:50vh;
+  overflow:visible;
+
+}
+
+.stop {
+  opacity: 0;
+  transform-origin: center;
+  color:black;
+  font-size: 36px;
+  font-family: sans-serif;
+  font-weight: 700;
+  visibility:hidden;
+
+}
+
+
+.end{
+  font-size: 36px;
+  font-family: sans-serif;
+  font-weight: 700;
+  visibility:hidden;
+}
+
