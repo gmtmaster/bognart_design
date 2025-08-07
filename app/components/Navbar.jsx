@@ -22,7 +22,7 @@ function Navbar() {
         });
 
         navTween.fromTo(".nav", {
-            backgroundColor: "transparent",
+            backgroundColor: 'rgba(99, 107, 47, 0.8)',
         }, {
             backgroundColor: 'rgba(120, 53, 15, 0.3)',
             backgroundFilter: 'blur(10px)',
@@ -34,7 +34,7 @@ function Navbar() {
 
 
     return (
-        <nav className="nav">
+        <nav className="nav text-white fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl rounded-full bg-white transition-all duration-300 border border-transparent shadow-md px-4 sm:px-6 md:px-10 py-1">
             <div>
                 <Link href="/" className="flex items-center gap-2">
                     BOGNART
