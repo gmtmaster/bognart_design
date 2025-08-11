@@ -30,7 +30,7 @@ const GreenLineScroll = () => {
                 start: 'top',
                 end: '+=190%',
                 scrub: true,
-                markers: true,
+                markers: false,
             },
         })
             .to(GreenLine, {

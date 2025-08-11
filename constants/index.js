@@ -31,7 +31,7 @@ const cards = [
     },
     {
         title: "Klasszikus Harmónia – Időtlen Otthon",
-        img: "/pr2.jpg",
+        img: "/pr2.webp",
         slug: "project-2",
         desc: "A letisztult vonalak, a természetes anyagok és a meleg tónusok időtlen hangulatot árasztanak, miközben minden részlet a nyugodt, harmonikus élettér megteremtését szolgálja.",
     },
@@ -43,13 +43,13 @@ const cards = [
     },
     {
         title: "Letisztult Élettér - Airbnb lakás",
-        img: "/pr4.webp",
+        img: "/pr4.jpg",
         slug: "project-4",
         desc: "A fürdő és a konyha finoman összehangolt színvilága, a nappali és étkező meleg tónusai otthonos, mégis friss atmoszférát teremtenek, amely időtálló marad.",
     },
     {
         title: "Időtlen elegancia",
-        img: "/pr5.webp",
+        img: "/pr5.png",
         slug: "project-5",
         desc: "Letisztult arányok, nemes anyagok és finom részletek, melyek sosem mennek ki a divatból.",
     },

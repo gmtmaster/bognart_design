@@ -73,18 +73,15 @@ function Cards() {
                             src={img}
                             alt={title}
                             className="absolute inset-0 h-full w-full object-cover
-                   scale-105 opacity-90 blur-[2px]
-                   transition-[filter,opacity,transform] duration-500 ease-out
-                   group-hover:scale-100 group-hover:opacity-100 group-hover:blur-0"
+                 transition duration-300 ease-out
+                 group-hover:blur-sm"
                         />
 
-                        {/* Optional subtle tint that fades out on hover (for text legibility) */}
-                        <div className="absolute inset-0 bg-black/10 opacity-100 transition-opacity duration-500 group-hover:opacity-0" />
 
                         {/* Overlay content */}
-                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
-                            <h3 className="text-white drop-shadow text-3xl font-bold mb-2">{title}</h3>
-                            <p className="text-white/90 drop-shadow text-sm max-w-md">{desc}</p>
+                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <h3 className="text-gray-800 drop-shadow text-3xl font-bold mb-2">{title}</h3>
+                            <p className="text-gray-800/90 drop-shadow text-sm max-w-md">{desc}</p>
                         </div>
                     </a>
                 </div>
