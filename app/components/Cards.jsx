@@ -29,12 +29,12 @@ function Cards() {
             pin: true,
             scrub: 1,
             animation: tween,
-            markers: true,
+            markers: false,
         });
     }, []);
 
     return (
-        <section id="cardsWrapper" className="cardsWrapper " ref={wrapperRef}>
+        <section id="projects" id="cardsWrapper" className="cardsWrapper " ref={wrapperRef}>
 
         <div className="cardsTrack" ref={trackRef}>
 
@@ -65,28 +65,31 @@ function Cards() {
             </div>
 
                 {/* 🔁 Mapped feature cards */}
-            {cards.map(({ title, img, link, desc }) => (
-                <div key={title} className="cards group relative overflow-hidden">
-                    <a href={link} target="_blank" rel="noreferrer" className="block w-full h-full relative">
-
-                        {/* Image appears on hover */}
+            {cards.map(({ title, img, slug, desc }) => (
+                <div key={title} className="cards group relative overflow-hidden rounded-2xl aspect-[4/3]">
+                    <a href={`/projects/${slug}`} rel="noreferrer" className="block w-full h-full relative">
+                        {/* Image: slightly blurred + dim by default, crystal clear on hover */}
                         <img
                             src={img}
                             alt={title}
-                            className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            className="absolute inset-0 h-full w-full object-cover
+                   scale-105 opacity-90 blur-[2px]
+                   transition-[filter,opacity,transform] duration-500 ease-out
+                   group-hover:scale-100 group-hover:opacity-100 group-hover:blur-0"
                         />
 
-                        {/* Overlay content */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-4">
-                            <h3 className="text-white text-3xl font-bold mb-2">{title}</h3>
-                            <p className="text-white text-sm opacity-80 max-w-md">{desc}</p>
-                        </div>
+                        {/* Optional subtle tint that fades out on hover (for text legibility) */}
+                        <div className="absolute inset-0 bg-black/10 opacity-100 transition-opacity duration-500 group-hover:opacity-0" />
 
-                        {/* Optional dark base background for contrast */}
-                        <div className="absolute inset-0 bg-amber-600/10"></div>
+                        {/* Overlay content */}
+                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
+                            <h3 className="text-white drop-shadow text-3xl font-bold mb-2">{title}</h3>
+                            <p className="text-white/90 drop-shadow text-sm max-w-md">{desc}</p>
+                        </div>
                     </a>
                 </div>
             ))}
+
 
 
         </div>

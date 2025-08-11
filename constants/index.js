@@ -11,10 +11,7 @@ const navLinks = [
         id: "szolgaltatasok",
         title: "Szolgáltatások",
     },
-    {
-        id: "kapcsolat",
-        title: "Kapcsolat",
-    },
+
     {
         id: "arajanlat",
         title: "Árajánlat",
@@ -27,39 +24,45 @@ const navLinks = [
 
 const cards = [
     {
-        title: "Project 1",
+        title: "Modern természetesség",
         img: "/pr1.jpg",
-        link: "https://bognart.com",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
+        slug: "project-1",
+        desc: "Világos tónusok, természetes anyagok és letisztult formák találkozása.",
     },
     {
-        title: "Project 2",
+        title: "Klasszikus Harmónia – Időtlen Otthon",
         img: "/pr2.jpg",
-        link: "https://bognart.com",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
+        slug: "project-2",
+        desc: "A letisztult vonalak, a természetes anyagok és a meleg tónusok időtlen hangulatot árasztanak, miközben minden részlet a nyugodt, harmonikus élettér megteremtését szolgálja.",
     },
     {
-        title: "Project 3",
+        title: "Modern Letisztultság – Természetes Elegancia",
         img: "/pr3.jpg",
-        link: "https://bognart.com",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
+        slug: "project-3",
+        desc: "A világos tónusok, a fa részletek és a puha textúrák meleg, hívogató légkört teremtenek, miközben a praktikus térszervezés a modern élet minden igényét kiszolgálja.",
     },
     {
-        title: "Project 4",
+        title: "Letisztult Élettér - Airbnb lakás",
         img: "/pr4.webp",
-        link: "https://bognart.com",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
+        slug: "project-4",
+        desc: "A fürdő és a konyha finoman összehangolt színvilága, a nappali és étkező meleg tónusai otthonos, mégis friss atmoszférát teremtenek, amely időtálló marad.",
     },
     {
-        title: "Project 5",
+        title: "Időtlen elegancia",
         img: "/pr5.webp",
-        link: "https://bognart.com",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
+        slug: "project-5",
+        desc: "Letisztult arányok, nemes anyagok és finom részletek, melyek sosem mennek ki a divatból.",
     },
     {
-        title: "Project 6",
+        title: "Japandi Konyha",
         img: "/pr6.jpg",
-        link: "https://bognart.com",
+        slug: "project-6",
+        desc: "A tágas elrendezés és az egyszerű, mégis kifinomult részletek nemcsak esztétikai élményt nyújtanak, hanem a mindennapi használatban is maximális kényelmet biztosítanak.",
+    },
+    {
+        title: "Project 7",
+        img: "/pr7.jpg",
+        slug: "project-7",
         desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
     },
 ];

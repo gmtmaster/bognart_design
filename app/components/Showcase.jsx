@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, {useEffect, useRef} from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
@@ -9,9 +9,15 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
 const GreenLineScroll = () => {
+
+    const sectionRef = useRef(null);
+
+
     useGSAP(() => {
         const GreenLine = '.theGreenLine';
         const stops = gsap.utils.toArray('.stop');
+
+
 
         // Initial setup
         gsap.set(GreenLine, { strokeWidth: 10, drawSVG: '0%' });
@@ -20,11 +26,11 @@ const GreenLineScroll = () => {
         // Draw the main green line with a scroll-linked timeline
         gsap.timeline({
             scrollTrigger: {
-                trigger: '.line',
-                start: 'top  bottom',
-                end: '+=3300',
+                trigger: sectionRef.current,
+                start: 'top',
+                end: '+=190%',
                 scrub: true,
-                // markers: true,
+                markers: true,
             },
         })
             .to(GreenLine, {
@@ -65,25 +71,15 @@ const GreenLineScroll = () => {
             ScrollTrigger.getAll().forEach(t => t.kill());
         };
 
-        gsap.to(stop, {
-            scale: 1.2,
-            repeat: 1,
-            yoyo: true,
-            duration: 0.3,
-            scrollTrigger: {
-                trigger: stop,
-                start: 'top center+=100',
-                toggleActions: 'play none none reverse',
-            },
-        });
+
     }, []);
 
     return (
-        <section className=" h-[2800px] text-white">
+        <section ref={sectionRef} className=" h-[2800px] text-white">
             <div>
 
 
-            <svg className="mt-[60vh] w-full h-[2800px]" viewBox="0 0 600 2800">
+            <svg className="mt-[30vh] w-full h-[2800px]" viewBox="0 0 600 2800">
                 <defs>
                     <linearGradient id="amberGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stopColor="#fffbeb" />

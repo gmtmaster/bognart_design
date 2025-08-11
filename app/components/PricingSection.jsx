@@ -27,7 +27,7 @@ const plans = [
 
 export default function PricingSection() {
     return (
-        <section className="py-24 bg-white text-black">
+        <section id="szolgaltatasok" className="py-24 bg-white text-black">
             <h2 className="text-4xl font-bold text-center mb-12">Szolgáltatások</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto px-4">
                 {plans.map((plan, idx) => (

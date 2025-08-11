@@ -17,18 +17,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   return (
-      <main>
 
-        <Navbar/>
-        <Hero />
-          <Showcase />
+        <>
+            <Navbar/>
+            <Hero />
+            <AboutMe />
           <Cards />
-          <AboutMe />
+            <Showcase />
+
           <Partners />
           <PricingSection />
           <Footer />
+        </>
 
 
-      </main>
   );
 }
