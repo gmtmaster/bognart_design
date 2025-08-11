@@ -67,9 +67,108 @@ const cards = [
     },
 ];
 
+const plans = [
+    {
+        img: '/price/basic.jpg',
+        alt: 'basic',
+        title: 'Basic',
+        desc: 'Ez a csomag nem tartalmaz fotórealisztikus látványterveket.\n' +
+            'A Basic csomagot azoknak ajánlom, akik már egy meglévő vagy felújított helyiség elrendezését és bútorozását tervezik. Fontos számomra, hogy a tervek praktikusak és időtállóak legyenek, így ebben a csomagban is ezt a szemléletet követem.\n',
+        question: 'Mit tartalmaz a csomag?',
+        features: ['Egy alkalmas személyes konzultáció', 'Két változatban készített konszignációs alaprajz', 'Egyszerű, vázlatos látványterv (white 3d model)', 'Vázlatos falnézetek', 'Helyszíni bejárás és pontos felmérés', 'Hangulatkép (moodboard) a tervezett stílus bemutatására', 'Részletes bevásárló lista a kiválasztott elemekhez'],
+    },
+    {
+        img: '/price/standard.jpg',
+        alt: 'standard',
+        title: 'Standard',
+        desc: 'Ez a csomag azoknak szól, akik otthonukban egy-egy helyiséget szeretnének megújítani, például nappalit, gyerekszobát vagy fürdőszobát.\n' +
+            'A Standard tervezést azoknak ajánlom, akik részleges felújításban gondolkodnak, és fontos számukra a részletes, pontos tervdokumentáció. Ez a csomag minden lényeges elemet tartalmaz, mint a prémium, csak egy vagy két helyiségre fókuszálva.\n',
+        question: 'Mit kapsz ebben a csomagban?',
+        features: [
+            'Két alkalmas személyes konzultáció',
+            'Két-három változatban készített konszignációs alaprajz',
+            'Világítási terv',
+            'Gépészeti terv',
+            'Elektromos terv',
+            'Falazási és bontási terv',
+            'Álmennyezeti terv',
+            'Vázlatos és színes falnézetek',
+            'Fotórealisztikus vagy egyszerűsített látványtervek',
+            'Vázlatos látványterv',
+            'Helyszíni bejárás és pontos felmérés',
+            'Hangulatkép (moodboard) a tervezett stílus bemutatására',
+            'Részletes bevásárló lista',
+            'Folyamatos kapcsolattartás a tervezés során',
+            'Kapcsolattartás a szakemberekkel a megvalósításhoz'
+        ],
+    },
+    {
+        img: '/price/premium.jpg',
+        alt: 'premium',
+        title: 'Premium',
+        desc: 'Ezt a csomagot azoknak ajánlom, akik nagyobb felújítást vagy építkezést terveznek. Legyen szó új ház vagy lakás vásárlásáról, vagy meglévő ingatlan teljes átalakításáról, a Premium csomag segítségével időtálló, stílusos és praktikus otthont alakítunk ki.\n' +
+            'Ebben a csomagban az egész ingatlanra fókuszálunk, így lehetőség van a helyiségek harmonikus összehangolására: a színek, anyagok és formák tökéletes egységére. A fotórealisztikus látványtervek pedig segítenek elképzelni a végeredményt, még a munka megkezdése előtt.\n',
+        question: 'Mit tartalmaz a csomag?',
+        features: [
+            'Három alkalommal személyes konzultáció',
+            'Két-három változatban készített konszignációs alaprajz',
+            'Világítási terv',
+            'Gépészeti terv',
+            'Elektromos terv',
+            'Falazási és bontási terv',
+            'Álmennyezeti terv',
+            'Vázlatos és színes falnézetek',
+            'Fotórealisztikus látványtervek',
+            'Vázlatos látványterv',
+            'Helyszíni bejárás és részletes felmérés',
+            'Hangulatkép (moodboard) a tervezett stílus bemutatására',
+            'Részletes bevásárló lista',
+            'Folyamatos kapcsolattartás a tervezés egész folyamata alatt',
+            'Kapcsolattartás a szakemberekkel a kivitelezés során'
+        ],
+    },
+    {
+        img: '/price/konyha.jpg',
+        alt: '',
+        title: 'Konyhatervezés',
+        desc: 'Egyedi igényekre szabott, funkcionális és időtálló konyhaterveket készítek, ahol a design és a használhatóság harmonikusan összekapcsolódik. A tervezési folyamat maximum 30 napot vesz igénybe.\n' +
+            'A legmodernebb belsőépítészeti trendek és technológiák alkalmazásával részletes tervdokumentációt nyújtok, amely támogatja a gördülékeny kivitelezést. A tervezés során kiemelt figyelmet fordítok a téroptimalizálásra, ergonómiára és műszaki megvalósíthatóságra.\n',
+        question: 'A tervdokumentáció tartalma:\n',
+        features: [
+            '2 alkalmas konzultáció az igények pontosítására',
+            'Konszignációs alaprajz készítése',
+            'Világítási terv kidolgozása',
+            'Gépészeti és elektromos tervek elkészítése',
+            'Falazási és bontási terv összeállítása',
+            'Álmennyezeti terv megtervezése',
+            'Vázlatos és színes falnézetek',
+            'Fotórealisztikus és vázlatos látványtervek bemutatása',
+            'Helyszíni bejárás és pontos felmérés',
+            'Moodboard készítése a stílus és hangulat meghatározásához',
+            'Bevásárló lista összeállítása az anyagokhoz',
+            'Folyamatos kapcsolattartás az ügyféllel a tervezés teljes folyamata alatt',
+            'Kapcsolattartás a kivitelező szakemberekkel a gördülékeny megvalósítás érdekében'
+        ],
+    },
+];
+
+const partners = [
+    { name: 'Partner One', logo: '/partners/caesar.webp' },
+    { name: 'Partner Two', logo: '/partners/horanyi.png' },
+    { name: 'Partner Three', logo: '/partners/ifloor.png' },
+    { name: 'Partner Four', logo: '/partners/plshoppe.png' },
+    { name: 'Partner Four', logo: '/partners/urbanhome.png' },
+    { name: 'Partner One', logo: '/partners/caesar.webp' },
+    { name: 'Partner Two', logo: '/partners/horanyi.png' },
+    { name: 'Partner Three', logo: '/partners/ifloor.png' },
+    { name: 'Partner Four', logo: '/partners/plshoppe.png' },
+    { name: 'Partner Four', logo: '/partners/urbanhome.png' },
+];
 
 
 export {
     navLinks,
     cards,
+    plans,
+    partners,
 };

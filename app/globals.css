@@ -160,5 +160,69 @@ body {
   text-transform: uppercase;
 }
 
+.marquee-viewport {
+  overflow: hidden;
+  /* nice edge fade */
+  -webkit-mask-image: linear-gradient(
+          to right,
+          transparent 0%,
+          black 10%,
+          black 90%,
+          transparent 100%
+  );
+  mask-image: linear-gradient(
+          to right,
+          transparent 0%,
+          black 10%,
+          black 90%,
+          transparent 100%
+  );
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.5rem;           /* space between cards */
+  width: max-content;    /* track is as wide as its contents */
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+  padding: 0 1rem;       /* small side padding so the mask looks nicer */
+}
+
+
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* move by half because we duplicated once */
+}
+
+.partner-card {
+  flex: 0 0 auto;
+  width: 16rem;                 /* adjust to taste (w-64) */
+  height: 7rem;                 /* h-28 */
+  border-radius: 1rem;          /* rounded-2xl */
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.partner-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive sizing */
+@media (min-width: 640px) { /* sm */
+  .partner-card { width: 18rem; height: 8rem; }
+}
+@media (min-width: 1024px) { /* lg */
+  .partner-card { width: 20rem; height: 9rem; }
+}
+
 
 

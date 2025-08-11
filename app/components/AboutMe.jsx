@@ -27,7 +27,7 @@ export default function RolamSection() {
     ];
 
     return (
-        <section id="rolam" className="py-16 md:py-24">
+        <section id="rolam" className="py-16 md:py-24 bg-[#f4f1ec]">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4">
                 {/* Left: text card */}
                 <motion.div

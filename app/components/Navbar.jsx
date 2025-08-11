@@ -50,7 +50,7 @@ export default function Navbar() {
         <main>
         <header
             ref={headerRef}
-            className="navbar fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl rounded-2xl border-transparent shadow-md transition-all duration-300"
+            className="navbar fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl rounded-2xl border-transparent shadow-md transition-all duration-300"
         >
             <div className="flex justify-between h-16 px-4 sm:px-6 lg:px-8">
                 {/* Logo */}
@@ -140,7 +140,7 @@ export default function Navbar() {
                                 <a
                                     href={`#${link.id}`}
                                     onClick={() => setIsOpen(false)}
-                                    className="block py-2 text-stone-800 hover:text-amber-700 transition-colors"
+                                    className="block py-2 text-stone-800 hover:text-red-800 transition-colors"
                                 >
                                     {link.title}
                                 </a>
