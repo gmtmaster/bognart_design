@@ -3,20 +3,21 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { navLinks } from '@/constants';
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiInstagram, FiFacebook, FiX, FiMenu } from 'react-icons/fi';
 import { FaTiktok } from 'react-icons/fa';
-
-// ✅ Add GSAP (no content changes, just behavior)
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {white} from "next/dist/lib/picocolors";
 import ContactForm from "@/app/components/ContactForm";
+import { useRouter } from "next/navigation";
+
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Navbar() {
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [contactFormOpen, setIsContactFormOpen] = useState(false);
     const closeContactForm = () => setIsContactFormOpen(false);
@@ -135,19 +136,42 @@ export default function Navbar() {
                 }`}
             >
                 <nav className="px-4 pb-4 pt-2 bg-white/90 backdrop-blur-md rounded-b-2xl shadow-md">
-                    <ul className="flex flex-col gap-2">
-                        {navLinks.map(link => (
-                            <li key={link.id}>
-                                <a
-                                    href={`#${link.id}`}
-                                    onClick={() => setIsOpen(false)}
-                                    className="block py-2 text-stone-800 hover:text-red-800 transition-colors"
-                                >
-                                    {link.title}
-                                </a>
-                            </li>
-                        ))}
+                    import Link from "next/link";
+
+                    // DESKTOP
+                    import Link from "next/link";
+
+                    <ul className="hidden lg:flex items-center gap-8">
+                        {navLinks
+                            .filter(link => link.id !== "arajanlat")
+                            .map((link) => (
+                                <li key={link.id}>
+                                    <a
+                                        href={`#${link.id}`}
+                                        onClick={() => setIsOpen(false)}
+                                        className="relative group text-gray-800 font-semibold hover:text-red-900 transition-colors duration-300"
+                                    >
+                                        {link.title}
+                                        <span className="absolute bottom-[-6px] left-0 w-0 h-0.5 bg-red-900 group-hover:w-full transition-all duration-300" />
+                                    </a>
+                                </li>
+                            ))}
+
+                        {/* separate Árajánlat link */}
+                        <li>
+                            <Link
+                                href="/arajanlat"
+                                prefetch={false}
+                                onClick={() => setIsOpen(false)}
+                                className="relative group text-gray-800 font-semibold hover:text-red-900 transition-colors duration-300"
+                            >
+                                Árajánlat
+                                <span className="absolute bottom-[-6px] left-0 w-0 h-0.5 bg-red-900 group-hover:w-full transition-all duration-300" />
+                            </Link>
+                        </li>
                     </ul>
+
+
 
                     <div className="mt-4 pt-4 border-t border-stone-200">
                         <div className="flex items-center gap-5">

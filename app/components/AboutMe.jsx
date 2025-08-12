@@ -49,7 +49,13 @@ export default function RolamSection() {
                     </div>
 
                     <motion.div variants={item} className="mt-8">
-                        <button className="button">
+                        <button
+                            onClick={() => {
+                                document.querySelector('#kapcsolat')?.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }}
+                            className="button">
                             Kapcsolat
                         </button>
                     </motion.div>

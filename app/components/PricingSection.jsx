@@ -2,8 +2,12 @@
 
 import React from 'react';
 import { plans } from "@/constants";
+import {useRouter} from "next/navigation";
 
 export default function PricingSection() {
+
+    const router = useRouter();
+
     return (
         <section id="szolgaltatasok" className="py-24 bg-[#f4f1ec] text-black">
             <h2 className="text-4xl font-bold text-center mb-12">Szolgáltatások</h2>
@@ -40,7 +44,9 @@ export default function PricingSection() {
 
                             {/* push button to bottom if content is short */}
                             <div className="mt-auto">
-                                <button className="button">Kiválszt</button>
+                                <button
+                                    onClick={() => router.push("/arajanlat")}
+                                    className="button">Kiválszt</button>
                             </div>
                         </div>
                     </div>

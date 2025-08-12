@@ -54,7 +54,13 @@ function Cards() {
                     </div>
 
                     <div className="flex justify-center items-center flex-col">
-                        <button className="button mt-4" href="#footer" >
+                        <button
+                            onClick={() => {
+                                document.querySelector('#kapcsolat')?.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }}
+                            className="button mt-4" >
                             Kapcsolat
                         </button>
                     </div>

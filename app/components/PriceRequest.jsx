@@ -1,58 +1,45 @@
+'use client'
+
 import React from 'react';
-import {motion} from "framer-motion";
-import {FiX} from "react-icons/fi";
+import { motion } from "framer-motion";
 import Link from "next/link";
+import BlueprintUploader from "@/app/components/BluePrintUploader";
 
-function Price(props) {
+function PriceRequest() {
     return (
-        <section>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4"
-            >
-                <motion.div
-                    initial={{ scale: 0.8, opacity: 0, y: 30 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0.8, opacity: 0, y: 30 }}
-                    transition={{ type: "spring", damping: 30, stiffness: 200, duration: 0.8 }}
-                    className="w-full max-w-lg rounded-xl border border-stone-200 bg-stone-50 p-6 shadow-xl max-h-[85vh] overflow-y-auto overscroll-contain"
-                >
-                    {/* sticky header (optional but nice) */}
-                    <div className="mb-4 flex items-center justify-between bg-stone-50 pb-3 pt-1 -mt-1">
-                        <h1 className="text-2xl font-bold text-stone-800">Lépj velem kapcsolatba</h1>
-                        <button onClick={closeContactForm}>
-                            <FiX className="h-6 w-6 text-stone-400" />
-                        </button>
-                    </div>
+        <section className="min-h-screen py-28 px-4 flex justify-center items-start ">
+            <div className="w-full max-w-lg rounded-xl border border-stone-200 bg-white shadow-xl flex flex-col ">
+                {/* Sticky header */}
+                <div className="px-6 py-4 bg-white rounded-2xl z-10">
+                    <h1 className="text-2xl font-bold text-stone-800">Árajánlat kérés</h1>
+                </div>
 
-                    {/* Form */}
-                    <form action="" className="space-y-4">
+                {/* Scrollable form content */}
+                <div className="overflow-y-auto px-6 py-4 space-y-4">
+                    <form className="space-y-4">
                         {/* Név */}
                         <div>
-                            <label htmlFor="name" className="mb-1 block text-sm font-medium text-stone-700">
+                            <label htmlFor="name" className="block text-sm font-medium text-stone-700">
                                 Név
                             </label>
                             <input
                                 type="text"
                                 id="name"
                                 placeholder="Írd be a neved"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             />
                         </div>
 
                         {/* Email */}
                         <div>
-                            <label htmlFor="email" className="mb-1 block text-sm font-medium text-stone-700">
+                            <label htmlFor="email" className="block text-sm font-medium text-stone-700">
                                 Email
                             </label>
                             <input
                                 type="email"
                                 id="email"
                                 placeholder="nev@email.hu"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             />
                         </div>
 
@@ -65,7 +52,7 @@ function Price(props) {
                                 type="tel"
                                 id="phone"
                                 placeholder="+36 …"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             />
                         </div>
 
@@ -78,7 +65,7 @@ function Price(props) {
                                 type="text"
                                 id="location"
                                 placeholder="Város, kerület / cím"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             />
                         </div>
 
@@ -91,7 +78,7 @@ function Price(props) {
                                 type="text"
                                 id="size"
                                 placeholder="pl. 65 m²"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             />
                         </div>
 
@@ -102,7 +89,7 @@ function Price(props) {
                             </label>
                             <select
                                 id="condition"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             >
                                 <option value="">Válassz…</option>
                                 <option>Új építésű</option>
@@ -119,7 +106,7 @@ function Price(props) {
                             </label>
                             <select
                                 id="package"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             >
                                 <option value="">Válassz…</option>
                                 <option>Konzultáció</option>
@@ -132,11 +119,11 @@ function Price(props) {
                         {/* Checkboxok */}
                         <div className="flex flex-wrap gap-6">
                             <label className="inline-flex items-center gap-2 text-stone-700">
-                                <input type="checkbox" className="h-4 w-4 accent-amber-600" />
+                                <input type="checkbox" className="h-4 w-4 accent-[#CA8A8A]" />
                                 Tanácsadás
                             </label>
                             <label className="inline-flex items-center gap-2 text-stone-700">
-                                <input type="checkbox" className="h-4 w-4 accent-amber-600" />
+                                <input type="checkbox" className="h-4 w-4 accent-[#CA8A8A]" />
                                 Árajánlatkérés
                             </label>
                         </div>
@@ -148,7 +135,7 @@ function Price(props) {
                             </label>
                             <select
                                 id="ref"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             >
                                 <option value="">Válassz…</option>
                                 <option>Google</option>
@@ -167,9 +154,13 @@ function Price(props) {
                                 rows={4}
                                 id="message"
                                 placeholder="Miben segíthetünk?"
-                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
                             />
                         </div>
+
+                        {/* Alaprajz feltöltés (opcionális) */}
+                        <BlueprintUploader maxFiles={3} onChange={(files) => console.log('selected files:', files)} />
+
 
 
                         {/* Consent */}
@@ -179,49 +170,35 @@ function Price(props) {
                                     id="consent"
                                     type="checkbox"
                                     required
-                                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-stone-300 text-amber-600 focus:ring-amber-500 focus:outline-none"
+                                    className="mt-0.5 h-4 w-4"
                                 />
                                 <span>
-                                            Elolvastam és elfogadom a{' '}
-                                    <Link
-                                        href="/terms"
-                                        className="font-medium text-amber-700 underline  hover:text-amber-800"
-                                    >
-                                            Felhasználási feltételeket
-                                          </Link>{' '}
-                                    és az{' '}
-                                    <Link
-                                        href="/privacy"
-                                        className="font-medium text-amber-700 underline  hover:text-amber-800"
-                                    >
-                                            Adatvédelmi tájékoztatót
-                                          </Link>
-                                          .
-                                        </span>
+                                  Elolvastam és elfogadom a{' '}
+                                                    <Link href="/policies/terms" className="font-medium text-[#CA8A8A] hover:text-[#AD4949] underline">
+                                    Felhasználási feltételeket
+                                  </Link>{' '}
+                                                    és az{' '}
+                                                    <Link href="/policies/privacy" className="font-medium text-[#CA8A8A] hover:text-[#AD4949] underline">
+                                    Adatvédelmi tájékoztatót
+                                  </Link>.
+                                </span>
                             </label>
                             <p className="mt-2 text-xs text-stone-500">
-                                Az űrlap beküldésével hozzájárulsz az adataid kezeléséhez az adatkezelési tájékoztató szerint.
+                                Az űrlap beküldésével hozzájárulsz az adataid kezeléséhez.
                             </p>
                         </div>
 
-
-
-                        {/* Gomb */}
+                        {/* Submit */}
                         <div className="flex justify-center">
-                            <motion.button
-                                type="submit"
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={openContactForm}
-                                className="button">
+                            <button type="submit" className="button">
                                 Küldés
-                            </motion.button>
+                            </button>
                         </div>
                     </form>
-                </motion.div>
-            </motion.div>
+                </div>
+            </div>
         </section>
     );
 }
 
-export default Price;
+export default PriceRequest;

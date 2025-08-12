@@ -4,7 +4,7 @@ import { pics, pics1 } from "@/constants";
 
 export default function Example() {
     return (
-        <section className="bg-[#f4f1ec] h-screen">
+        <section className="bg-[#f4f1ec] min-h-screen py-6">
 
             <div className="flex justify-center mb-10 items-center mx-auto text-center">
                 <h1 className="text-xl md:text-3xl font-bold text-black">
@@ -51,6 +51,14 @@ export default function Example() {
                     Nincs két ugyanolyan projekt, így nincs két azonos árképzés sem. A tervezési költség meghatározása számos tényezőtől függ, például a projektek jellegétől, méretétől, komplexitásától, az igényelt munka mennyiségétől és az időtartalmától.
                 </h3>
 
+            </div>
+            <div className="flex justify-center mb-10 items-center mx-auto text-center bg-[#AD4949] rounded-2xl max-w-5xl py-2">
+                <h3 className="text-lg md:text-2xl max-w-4xl text-white">
+                    <span className="uppercase font-bold">Fontos!</span> <br/>
+
+                    Az árak a kiszállítási díjat, valamint a helyszín felmérésének díját nem tartalmazzák.
+                    Az árak nettó árak és egy tervezési négyzetméterre vonatkoznak.
+                </h3>
             </div>
 
         </section>

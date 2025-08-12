@@ -13,10 +13,6 @@ const navLinks = [
     },
 
     {
-        id: "arajanlat",
-        title: "Árajánlat",
-    },
-    {
         id: "gyik",
         title: "GY.I.K",
     },
