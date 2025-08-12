@@ -60,10 +60,10 @@ const cards = [
         desc: "A tágas elrendezés és az egyszerű, mégis kifinomult részletek nemcsak esztétikai élményt nyújtanak, hanem a mindennapi használatban is maximális kényelmet biztosítanak.",
     },
     {
-        title: "Project 7",
-        img: "/pr7.jpg",
+        title: "COMING SOON",
+        img: "/pr7.png",
         slug: "project-7",
-        desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod,",
+        desc: "",
     },
 ];
 
@@ -78,12 +78,12 @@ const plans = [
         features: ['Egy alkalmas személyes konzultáció', 'Két változatban készített konszignációs alaprajz', 'Egyszerű, vázlatos látványterv (white 3d model)', 'Vázlatos falnézetek', 'Helyszíni bejárás és pontos felmérés', 'Hangulatkép (moodboard) a tervezett stílus bemutatására', 'Részletes bevásárló lista a kiválasztott elemekhez'],
     },
     {
-        img: '/price/standard.jpg',
+        img: '/price/standard1.jpg',
         alt: 'standard',
         title: 'Standard',
         desc: 'Ez a csomag azoknak szól, akik otthonukban egy-egy helyiséget szeretnének megújítani, például nappalit, gyerekszobát vagy fürdőszobát.\n' +
             'A Standard tervezést azoknak ajánlom, akik részleges felújításban gondolkodnak, és fontos számukra a részletes, pontos tervdokumentáció. Ez a csomag minden lényeges elemet tartalmaz, mint a prémium, csak egy vagy két helyiségre fókuszálva.\n',
-        question: 'Mit kapsz ebben a csomagban?',
+        question: 'Mit tartalmaz a csomag?',
         features: [
             'Két alkalmas személyes konzultáció',
             'Két-három változatban készített konszignációs alaprajz',
@@ -165,10 +165,21 @@ const partners = [
     { name: 'Partner Four', logo: '/partners/urbanhome.png' },
 ];
 
+const pics = [
+    '/slider/53.jpg',
+    '/slider/51.jpg',
+];
+let pics1;
+pics1 = [
+    '/slider/52.jpg',
+    '/slider/50.jpg',
+];
 
 export {
     navLinks,
     cards,
     plans,
     partners,
+    pics,
+    pics1,
 };

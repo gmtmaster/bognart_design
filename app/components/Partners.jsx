@@ -15,6 +15,11 @@ export default function Partners() {
 
     return (
         <section className="bg-[#f4f1ec] py-12">
+            <div className="flex justify-center mb-10 items-center mx-auto text-center" >
+                <h3 className="text-3xl lg:text-4xl font-bold text-black" >
+                    Partnerek
+                </h3>
+            </div>
 
 
             {/* Marquee viewport */}

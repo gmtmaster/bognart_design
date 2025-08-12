@@ -30,11 +30,11 @@ export default function RootLayout({ children }) {
               <img
                   src="/hero.webp"
                   alt=""
-                  className="h-full w-full object-cover will-change-transform"
+                  className="h-full w-full object-top object-cover"
                   loading="eager"
               />
               {/* Soft overlay for readability (optional) */}
-              <div className="absolute inset-0 bg-stone-50/50" />
+              <div className="absolute inset-0 bg-stone-50/20" />
           </div>
       </div>
 

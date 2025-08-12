@@ -82,9 +82,9 @@ const GreenLineScroll = () => {
             <svg className="mt-[30vh] w-full h-[2800px]" viewBox="0 0 600 2800">
                 <defs>
                     <linearGradient id="amberGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#991b1b" />
-                        <stop offset="50%" stopColor="#991b1b" />
-                        <stop offset="100%" stopColor="#991b1b" />
+                        <stop offset="0%" stopColor="#CA8A8A" />
+                        <stop offset="50%" stopColor="#AD4949" />
+                        <stop offset="100%" stopColor="#CA8A8A" />
                     </linearGradient>
                 </defs>
                 <path

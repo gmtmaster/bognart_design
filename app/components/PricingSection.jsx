@@ -22,20 +22,21 @@ export default function PricingSection() {
                                 <img
                                     src={plan.img}
                                     alt={plan.title || 'konyha'}
-                                    className="absolute inset-0 w-full h-full object-cover"
+                                    className="absolute inset-0 w-full h-full object-left object-cover"
                                     loading="lazy"
                                 />
                             </div>
 
                             <h3 className="text-2xl font-semibold mb-2">{plan.title}</h3>
-                            <p className="text-md mb-6">{plan.desc}</p>
-                            <p className="text-md font-semibold mb-2">{plan.question}</p>
+                            <p className="text-md mb-10">{plan.desc}</p>
+                            <p className="text-md font-semibold mb-2 text-left">{plan.question}</p>
 
-                            <ul className="text-sm font-medium mb-6 space-y-2 text-left">
+                            <ul className="text-sm font-medium mb-6 space-y-2 text-left list-disc list-inside">
                                 {plan.features.map((feature, i) => (
                                     <li key={i}>{feature}</li>
                                 ))}
                             </ul>
+
 
                             {/* push button to bottom if content is short */}
                             <div className="mt-auto">

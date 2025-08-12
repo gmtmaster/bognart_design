@@ -12,6 +12,7 @@ import Footer from "@/app/components/Footer";
 import PricingSection from "@/app/components/PricingSection";
 import Cards from "@/app/components/Cards";
 import FAQ from "@/app/components/FAQ";
+import MoreOptions from "@/app/components/MoreOptions";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,9 +26,9 @@ export default function Home() {
             <AboutMe />
           <Cards />
             <Showcase />
-
           <Partners />
           <PricingSection />
+            <MoreOptions />
             <FAQ />
           <Footer />
         </>
