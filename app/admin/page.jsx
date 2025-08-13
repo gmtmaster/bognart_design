@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -86,6 +86,7 @@ function LoginForm() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [contacts, setContacts] = useState([]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -127,9 +128,9 @@ function LoginForm() {
                         type="submit"
                         disabled={loading}
                         className="w-full rounded-xl bg-[#AD4949] text-white py-2.5 hover:opacity-95 transition flex items-center justify-center gap-2"
-                    style={{ backgroundColor: ACCENT }}
+                        style={{ backgroundColor: ACCENT }}
                     >
-                    {loading && <Loader2 className="animate-spin" size={18} />} Belépés
+                        {loading && <Loader2 className="animate-spin" size={18} />} Belépés
                     </button>
                 </form>
             </div>
@@ -142,54 +143,55 @@ function Dashboard({ session }) {
     const [inquiries, setInquiries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [query, setQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState('all'); // all | new | in_review | answered
+
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [selectedContact, setSelectedContact] = useState(null);
+    const [contacts, setContacts] = useState([]);
     const [selected, setSelected] = useState(null); // the selected inquiry (object)
     const [toast, setToast] = useState(null);
+
 
     useEffect(() => {
         let mounted = true;
 
         async function load() {
             setLoading(true);
-            const { data, error } = await supabase
-                .from('inquiries')
-                .select('*')
-                .order('created_at', { ascending: false });
+            const [{ data: inq, error: inqErr }, { data: con, error: conErr }] = await Promise.all([
+                supabase.from('inquiries').select('*').order('created_at', { ascending: false }),
+                supabase.from('contact_messages').select('*').order('created_at', { ascending: false }).limit(12),
+            ]);
 
-            if (error) {
-                console.error('[admin] fetch inquiries error', error);
-                if (mounted) setLoading(false);
-                return;
-            }
+            if (inqErr) console.error('[admin] fetch inquiries error', inqErr);
+            if (conErr) console.error('[admin] fetch contacts error', conErr);
 
-            const mapped = (data || []).map((row) => ({
+            if (!mounted) return;
+
+            setInquiries((inq || []).map((row) => ({
                 ...row,
-                // normalize fields expected by UI
                 status: row.status || 'new',
-                subject: row.subject ?? deriveSubject(row), // synthesize a subject if you don't store one
-            }));
+                subject: row.subject ?? deriveSubject(row),
+            })));
 
-            if (mounted) {
-                setInquiries(mapped);
-                setLoading(false);
-            }
+            setContacts(con || []);
+            setLoading(false);
         }
 
         load();
 
-        // optional realtime: naive refresh on any change
-        const channel = supabase
+        const ch1 = supabase
             .channel('inquiries-stream')
-            .on(
-                'postgres_changes',
-                { event: '*', schema: 'public', table: 'inquiries' },
-                () => load()
-            )
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'inquiries' }, load)
+            .subscribe();
+
+        const ch2 = supabase
+            .channel('contacts-stream')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'contact_messages' }, load)
             .subscribe();
 
         return () => {
             mounted = false;
-            supabase.removeChannel(channel);
+            supabase.removeChannel(ch1);
+            supabase.removeChannel(ch2);
         };
     }, []);
 
@@ -212,6 +214,36 @@ function Dashboard({ session }) {
         answered: inquiries.filter((i) => i.status === 'answered').length,
     }), [inquiries]);
 
+    // ✅ Update contact status (only 'new' | 'answered' to match your CHECK)
+    const updateContactStatus = async (id, status) => {
+        // optimistic update
+        setContacts(prev => prev.map(c => (c.id === id ? { ...c, status } : c)));
+        const { error } = await supabase
+            .from('contact_messages')
+            .update({ status })
+            .eq('id', id);
+        if (error) {
+            console.error('[admin] contact status update failed', error);
+            setToast({ type: 'error', message: 'Üzenet státusz frissítése sikertelen.' });
+        } else {
+            setToast({ type: 'success', message: 'Üzenet státusz frissítve.' });
+        }
+    };
+
+    const openContact = (c) => setSelectedContact(c);
+    const answerContact = (c) => setSelectedContact({ ...c, _focusReply: true });
+    const archiveContact = async (c) => {
+        if (!confirm('Biztosan archiválod? (A sor törlésre kerül.)')) return;
+        const { error } = await supabase.from('contact_messages').delete().eq('id', c.id);
+        if (error) {
+            console.error('[admin] delete contact failed', error);
+            setToast({ type: 'error', message: 'Archiválás sikertelen.' });
+        } else {
+            setContacts(prev => prev.filter(x => x.id !== c.id));
+            setToast({ type: 'success', message: 'Archiválva.' });
+        }
+    };
+
     const updateStatus = async (id, status) => {
         // optimistic update
         setInquiries((prev) => prev.map((i) => (i.id === id ? { ...i, status } : i)));
@@ -231,6 +263,7 @@ function Dashboard({ session }) {
         }
     };
 
+
     const signOut = async () => {
         await supabase.auth.signOut();
     };
@@ -239,7 +272,11 @@ function Dashboard({ session }) {
         <div className="min-h-screen bg-[#f4f1ec]">
             <Topbar onSignOut={signOut} user={session?.user} />
             <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-6">
-                <Sidebar counts={counts} />
+                <Sidebar
+                    counts={counts}
+                    contacts={contacts}
+                    onOpenContact={(contact) => setSelectedContact(contact)}
+                />
 
                 <main>
                     <motion.div
@@ -307,15 +344,15 @@ function Dashboard({ session }) {
                                             <td className="px-4 py-3 text-right">
                                                 <button
                                                     className="inline-flex items-center gap-1 text-[#AD4949] hover:underline"
-                                                style={{ color: ACCENT }}
-                                                onClick={() => setSelected(i)}
+                                                    style={{ color: ACCENT }}
+                                                    onClick={() => setSelected(i)}
                                                 >
-                                                Megnyitás <ChevronRight size={16} />
-                                            </button>
-                                        </td>
-                                    </tr>
+                                                    Megnyitás <ChevronRight size={16} />
+                                                </button>
+                                            </td>
+                                        </tr>
                                     ))
-                                    )}
+                                )}
                                 </tbody>
                             </table>
                         </div>
@@ -328,6 +365,11 @@ function Dashboard({ session }) {
                 onClose={() => setSelected(null)}
                 onStatusChange={(status) => selected && updateStatus(selected.id, status)}
                 onToast={(t) => setToast(t)}
+            />
+            {/* ✅ new contact drawer */}
+            <ContactDrawer
+                contact={selectedContact}
+                onClose={() => setSelectedContact(null)}
             />
 
             <Toast toast={toast} onClose={() => setToast(null)} />
@@ -361,7 +403,8 @@ function Topbar({ onSignOut, user }) {
     );
 }
 
-function Sidebar({ counts }) {
+// change the function signature
+function Sidebar({ counts, contacts, onOpenContact }) {
     return (
         <aside className="space-y-4">
             <div className="bg-white/70 backdrop-blur-2xl rounded-2xl border border-white/60 shadow-xl p-4">
@@ -373,17 +416,130 @@ function Sidebar({ counts }) {
                     <StatCard label="Válaszolt" value={counts.answered} tone="done" />
                 </div>
             </div>
-            <div className="bg-white/70 backdrop-blur-2xl rounded-2xl border border-white/60 shadow-xl p-4">
-                <h3 className="font-semibold mb-2">Gyors tippek</h3>
-                <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
-                    <li>Sor megnyitása: részletes adatok + válasz.</li>
-                    <li>Állapot módosítás a részleteknél.</li>
-                    <li>Fájlok letöltése közvetlenül a panelből.</li>
-                </ul>
-            </div>
+
+
+            <MessagesTable contacts={contacts} onOpen={onOpenContact} />
+
+
         </aside>
     );
 }
+
+function MessagesTable({ contacts, onOpen }) {
+    const [statusFilter, setStatusFilter] = useState("all");
+    const [query, setQuery] = useState("");
+
+    const filteredContacts = useMemo(() => {
+        let list = contacts;
+        if (statusFilter !== "all") {
+            list = list.filter((c) => c.status === statusFilter);
+        }
+        if (query.trim()) {
+            const q = query.toLowerCase();
+            list = list.filter((c) =>
+                [c.name, c.email, c.message].some((v) => v?.toLowerCase().includes(q))
+            );
+        }
+        return list;
+    }, [contacts, statusFilter, query]);
+
+
+    const loading = false; // Or pass real loading from props
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="bg-white/70 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl p-4 md:p-6"
+        >
+            <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+                <div className="flex items-center gap-2 text-gray-900">
+                    <h1 className="text-xl md:text-2xl font-bold">Üzenetek</h1>
+                    <span className="text-xs text-gray-600 bg-gray-100 rounded-full px-2 py-1">
+            {contacts.length} db
+          </span>
+                </div>
+                <div className="flex gap-2">
+                    <FilterDropdown value={statusFilter} onChange={setStatusFilter} />
+                    <SearchInput value={query} onChange={setQuery} />
+                </div>
+            </div>
+
+            <div className="mt-4 overflow-hidden rounded-xl border border-gray-200">
+                <table className="w-full text-left">
+                    <thead className="bg-gray-50/80 text-gray-700 text-sm">
+                    <tr>
+                        <th className="px-4 py-3 font-semibold">Ügyfél</th>
+                        <th className="px-4 py-3 font-semibold">Kapcsolat</th>
+                        <th className="px-4 py-3 font-semibold">Üzenet</th>
+                        <th className="px-4 py-3 font-semibold">Érkezett</th>
+                        <th className="px-4 py-3 font-semibold">Állapot</th>
+                        <th className="px-4 py-3"></th>
+                    </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100 bg-white/50">
+                    {loading ? (
+                        <tr>
+                            <td colSpan={6} className="px-4 py-10 text-center text-gray-500">
+                                <div className="flex items-center justify-center gap-2">
+                                    <Loader2 className="animate-spin" /> Betöltés…
+                                </div>
+                            </td>
+                        </tr>
+                    ) : filteredContacts.length === 0 ? (
+                        <tr>
+                            <td colSpan={6} className="px-4 py-10 text-center text-gray-500">
+                                Nincs találat.
+                            </td>
+                        </tr>
+                    ) : (
+                        filteredContacts.map((c) => (
+                            <tr key={c.id} className="hover:bg-gray-50/60">
+                                <td className="px-4 py-3">
+                                    <div className="font-medium">{c.name}</div>
+                                    <div className="text-xs text-gray-500">
+                                        #{c.id.slice(0, 6)}
+                                    </div>
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-700">
+                                    <div>{c.email}</div>
+                                    {c.phone && (
+                                        <div className="text-xs text-gray-500">{c.phone}</div>
+                                    )}
+                                </td>
+                                <td
+                                    className="px-4 py-3 text-sm text-gray-700 max-w-[220px] truncate"
+                                    title={c.message}
+                                >
+                                    {c.message}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-700">
+                                    {formatDate(c.created_at)}
+                                </td>
+                                <td className="px-4 py-3">
+                                    <StatusPill status={c.status} />
+                                </td>
+                                <td className="px-4 py-3 text-right">
+                                    <button
+                                        className="inline-flex items-center gap-1 text-[#AD4949] hover:underline"
+                                        style={{ color: ACCENT }}
+                                        onClick={() => onOpen(c)}
+                                    >
+                                        Megnyitás <ChevronRight size={16} />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    )}
+                    </tbody>
+                </table>
+            </div>
+        </motion.div>
+    );
+}
+
+
 
 function StatCard({ label, value, tone }) {
     const toneClass =
@@ -603,17 +759,17 @@ function DetailsDrawer({ inquiry, onClose, onStatusChange, onToast }) {
                                                     href={f.url}
                                                     target="_blank"
                                                     className="inline-flex items-center gap-1 text-[#AD4949] hover:underline"
-                                                rel="noreferrer"
-                                                style={{ color: ACCENT }}
+                                                    rel="noreferrer"
+                                                    style={{ color: ACCENT }}
                                                 >
-                                                <Download size={16} /> Letöltés
-                                            </a>
+                                                    <Download size={16} /> Letöltés
+                                                </a>
                                             </li>
-                                            ))}
+                                        ))}
                                     </ul>
-                                    ) : (
+                                ) : (
                                     <p className="text-sm text-gray-600">Nincs csatolmány.</p>
-                                    )}
+                                )}
                             </section>
 
                             <section className="bg-white rounded-xl border border-gray-200 p-4">
@@ -653,9 +809,137 @@ function DetailsDrawer({ inquiry, onClose, onStatusChange, onToast }) {
                     </div>
                 </motion.aside>
             )}
-</AnimatePresence>
-);
+        </AnimatePresence>
+    );
 }
+
+function ContactDrawer({ contact, onClose, onStatusChange, onToast, accent = '#AD4949' }) {
+    const [sending, setSending] = useState(false);
+    const [reply, setReply] = useState({ subject: '', message: '' });
+    const [status, setStatus] = useState(contact?.status || 'new');
+    const replyBoxRef = useRef(null);
+
+    useEffect(() => {
+        if (!contact) return;
+        setReply({
+            subject: `Re: Kapcsolatfelvétel – ${contact.name ?? ''}`.trim(),
+            message: ''
+        });
+        setStatus(contact.status || 'new');
+        if (contact._focusReply) {
+            setTimeout(() => replyBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+        }
+    }, [contact]);
+
+    const sendEmail = async () => {
+        if (!contact) return;
+        setSending(true);
+        try {
+            // 🔧 Hook this to your email endpoint (/api/admin/reply-contact)
+            await new Promise((r) => setTimeout(r, 900));
+            onToast?.({ type: 'success', message: 'Válasz elküldve.' });
+            onStatusChange?.('answered'); // keep DB in sync
+        } catch (e) {
+            onToast?.({ type: 'error', message: 'Hiba történt a küldésnél.' });
+        } finally {
+            setSending(false);
+        }
+    };
+
+    return (
+        <AnimatePresence>
+            {contact && (
+                <motion.aside
+                    initial={{ x: '100%' }}
+                    animate={{ x: 0 }}
+                    exit={{ x: '100%' }}
+                    transition={{ type: 'spring', stiffness: 140, damping: 20 }}
+                    className="fixed inset-y-0 right-0 w-full max-w-xl bg-white shadow-2xl z-50"
+                >
+                    <div className="h-full grid grid-rows-[auto,1fr]">
+                        <div className="border-b px-4 py-3 flex items-center justify-between bg-white/80 backdrop-blur">
+                            <div>
+                                <div className="text-sm text-gray-500">#{contact.id.slice(0, 8)}</div>
+                                <h3 className="text-lg font-semibold">{contact.name}</h3>
+                            </div>
+                            <button className="rounded-full p-2 hover:bg-gray-100" onClick={onClose} aria-label="Bezárás">
+                                <X />
+                            </button>
+                        </div>
+
+                        <div className="overflow-y-auto p-4 space-y-6">
+                            {/* Kapcsolat */}
+                            <section className="bg-gray-50 rounded-xl border border-gray-200 p-4">
+                                <h4 className="font-semibold mb-2">Kapcsolat</h4>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                                    <Field label="E-mail" value={contact.email} copyable />
+                                    {contact.phone && <Field label="Telefon" value={contact.phone} />}
+                                    <Field label="Érkezett" value={formatDate(contact.created_at)} />
+                                    <div>
+                                        <label className="text-xs text-gray-500">Állapot</label>
+                                        <select
+                                            value={status}
+                                            onChange={(e) => { setStatus(e.target.value); onStatusChange?.(e.target.value); }}
+                                            className="mt-1 text-sm rounded-lg border border-gray-300 px-2 py-1"
+                                        >
+                                            <option value="new">Új</option>
+                                            <option value="answered">Válaszolt</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* Üzenet */}
+                            <section className="bg-gray-50 rounded-xl border border-gray-200 p-4">
+                                <h4 className="font-semibold mb-2">Üzenet</h4>
+                                <p className="text-sm text-gray-700 whitespace-pre-wrap">{contact.message}</p>
+                                {contact.user_agent && (
+                                    <p className="mt-3 text-xs text-gray-500">UA: {contact.user_agent}</p>
+                                )}
+                            </section>
+
+                            {/* Válasz */}
+                            <section ref={replyBoxRef} className="bg-white rounded-xl border border-gray-200 p-4">
+                                <h4 className="font-semibold mb-3 flex items-center gap-2"><Mail size={18} /> Válasz e-mailben</h4>
+                                <div className="space-y-3">
+                                    <input
+                                        value={reply.subject}
+                                        onChange={(e) => setReply((r) => ({ ...r, subject: e.target.value }))}
+                                        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(173,73,73,0.35)]"
+                                        placeholder="Tárgy"
+                                    />
+                                    <textarea
+                                        value={reply.message}
+                                        onChange={(e) => setReply((r) => ({ ...r, message: e.target.value }))}
+                                        rows={6}
+                                        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(173,73,73,0.35)]"
+                                        placeholder="Üzenet szövege…"
+                                    />
+                                    <div className="flex items-center justify-between">
+                                        <label className="inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                                            <input type="checkbox" className="rounded" />
+                                            Ajánlat csatolása (PDF)
+                                        </label>
+                                        <button
+                                            disabled={sending}
+                                            onClick={sendEmail}
+                                            className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+                                            style={{ backgroundColor: accent }}
+                                        >
+                                            {sending ? <Loader2 className="animate-spin" size={16} /> : <CheckCircle size={16} />}
+                                            Küldés
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </motion.aside>
+            )}
+        </AnimatePresence>
+    );
+}
+
 
 function Field({ label, value, copyable }) {
     const [copied, setCopied] = useState(false);
