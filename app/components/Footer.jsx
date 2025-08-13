@@ -55,14 +55,14 @@ export default function Footer() {
                 <div className="mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs text-stone-500">
                     <p>© {year} BOGNART. Minden jog fenntartva.</p>
                     <p>
-                        Designed by{" "}
+                        developed by{" "}
                         <a
                             href="https://adamlekrinszki.com/"
                             target="_blank"
                             rel="noreferrer"
                             className="underline decoration-dotted hover:text-stone-700"
                         >
-                            Adam Lekrinszki
+                            {' '}Adam &lt;/ Lekrinszki &gt;
                         </a>
                     </p>
                 </div>

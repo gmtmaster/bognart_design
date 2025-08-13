@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import CookieConsent from "@/app/components/CookiePolicy";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,7 @@ export default function RootLayout({ children }) {
           className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
       >
           {/* Clip the image container to any shape you like */}
-          <div className="[clip-path:polygon(0%_0%,100%_0%,100%_85%,0%_100%)] absolute inset-0">
+          <div >
               <img
                   src="/hero.webp"
                   alt=""
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
 
       {/* Your whole app scrolls over the fixed bg */}
       {children}
+      <CookieConsent />
       </body>
       </html>
   );

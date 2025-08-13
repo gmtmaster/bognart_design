@@ -14,6 +14,7 @@ import Cards from "@/app/components/Cards";
 import FAQ from "@/app/components/FAQ";
 import MoreOptions from "@/app/components/MoreOptions";
 import Footer from "@/app/components/Footer";
+import CookiePolicyModal from "@/app/components/CookiePolicy";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,6 +23,7 @@ export default function Home() {
   return (
 
         <>
+
             <Navbar/>
             <Hero />
             <AboutMe />

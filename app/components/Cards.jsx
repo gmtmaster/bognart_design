@@ -61,7 +61,7 @@ function Cards() {
                                 });
                             }}
                             className="button mt-4" >
-                            Kapcsolat
+                            Elérhetőségek
                         </button>
                     </div>
                 </div>

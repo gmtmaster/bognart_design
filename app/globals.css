@@ -21,7 +21,7 @@ body {
 .button {
   cursor: pointer;
   position: relative;
-  padding: 10px 24px;
+  padding: 6px 17px;
   font-size: 18px;
   color: rgba(120, 53, 15, 0.3);
   border: 2px solid rgba(120, 53, 15, 0.3);

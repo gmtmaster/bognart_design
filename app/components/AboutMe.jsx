@@ -56,7 +56,7 @@ export default function RolamSection() {
                                 });
                             }}
                             className="button">
-                            Kapcsolat
+                            Elérhetőségek
                         </button>
                     </motion.div>
                 </motion.div>
