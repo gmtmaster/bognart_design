@@ -103,55 +103,61 @@ const GreenLineScroll = () => {
                 />
                 {/* STOP 01 (title in <text>, description in <foreignObject>) */}
                 <g className="stop stop01">
-                    <text x="300" y="50" fill="black">
-                        <tspan className="text-3xl">1. Kapcsolat felvétel az ügyféllel</tspan>
+                    <text x="180" y="50" fill="black">
+                        <tspan className="text-2xl md:text-3xl">1. Kapcsolat felvétel az ügyféllel</tspan>
                     </text>
                 </g>
                 <g className="stop stop02">
-                    <text x="310" y="500" fill="black">
-                        <tspan className="text-3xl">2. Első személyes konzultáció</tspan>
+                    <text x="290" y="500" fill="black">
+                        <tspan className="text-2xl md:text-3xl">2. Első személyes konzultáció</tspan>
                     </text>
 
                 </g>
                 <g className="stop stop03">
-                    <text x="180" y="800" fill="black">
-                        <tspan className="text-3xl">3. Tervezési folyamat és költségvetés</tspan>
+                    <text x="140" y="800" fill="black">
+                        <tspan className="text-2xl md:text-3xl">3. Tervezési folyamat és költségvetés</tspan>
                     </text>
 
                 </g>
                 <g className="stop stop04">
-                    <text x="-100" y="1100" fill="black">
-                        <tspan className="text-3xl">4. Tervezési folyamat kezdete</tspan>
+                    <text x="0" y="1100" fill="black">
+                        <tspan className="max-w-lg text-2xl md:text-3xl">4. Tervezési folyamat kezdete</tspan>
                     </text>
 
                 </g>
                 <g className="stop stop05">
-                    <text x="250" y="1400" fill="black">
-                        <tspan className="text-3xl">5. Második személyes konzultáció</tspan>
+                    <text x="210" y="1400" fill="black">
+                        <tspan className="text-2xl md:text-3xl">5. Második személyes konzultáció</tspan>
                     </text>
 
                 </g>
                 <g className="stop stop06">
-                    <text x="200" y="1750" fill="black">
-                        <tspan className="text-3xl">6. Második tervezési szakasz</tspan>
+                    <text x="80" y="1750" fill="black">
+                        <tspan className="text-2xl md:text-3xl">6. Második tervezési szakasz</tspan>
                     </text>
 
                 </g>
                 <g className="stop stop07">
-                    <text x="280" y="2000" fill="black">
-                        <tspan className="text-3xl">7. Harmadik személyes konzultáció</tspan>
+                    <text x="260" y="2000" fill="black">
+                        <tspan className="text-2xl md:text-3xl">7. Harmadik személyes konzultáció</tspan>
                     </text>
 
                 </g>
                 <g className="stop stop08">
-                    <text x="-200" y="2300" fill="black">
-                        <tspan className="text-3xl">8. Végleges tervdokumentáció átadása</tspan>
+                    <text x="0" y="2300" fill="black">
+                        <tspan x="10" dy="0" className="text-2xl md:text-3xl">
+                            8. Végleges tervdokumentáció
+                        </tspan>
+                        <tspan x="10" dy="1.2em" className="text-2xl md:text-3xl">
+                            átadása
+                        </tspan>
                     </text>
+
 
                 </g>
                 <g className="stop stop09">
-                    <text x="330" y="2500" fill="black">
-                        <tspan className="text-3xl">9. Kivitelezés támogatása</tspan>
+                    <text x="270" y="2500" fill="black">
+                        <tspan className="text-2xl md:text-3xl">9. Kivitelezés támogatása</tspan>
                     </text>
 
                 </g>
