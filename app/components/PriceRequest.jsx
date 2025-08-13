@@ -226,7 +226,7 @@ function PriceRequest() {
         <section className="min-h-screen py-28 px-4 flex justify-center items-start ">
             <div className="w-full max-w-lg rounded-xl border border-stone-200 bg-white shadow-xl flex flex-col ">
                 <div className="px-6 py-4 bg-white rounded-2xl z-10">
-                    <h1 className="text-2xl font-bold text-stone-800">Árajánlat kérés</h1>
+                    <h1 className="text-2xl font-bold text-stone-800">Árajánlatkérés</h1>
                 </div>
 
                 <div className="overflow-y-auto px-6 py-4 space-y-4">
@@ -286,9 +286,9 @@ function PriceRequest() {
                                     className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]">
                                 <option value="">Válassz…</option>
                                 <option>Konzultáció</option>
-                                <option>Alap csomag</option>
+                                <option>Basic csomag</option>
                                 <option>Prémium csomag</option>
-                                <option>Luxus csomag</option>
+                                <option>Konyhatervezés</option>
                             </select>
                         </div>
 
@@ -326,7 +326,9 @@ function PriceRequest() {
                             >
                                 <option value="">Válassz…</option>
                                 <option>Google</option>
-                                <option>Instagram / Facebook</option>
+                                <option>Instagram</option>
+                                <option>Facebook</option>
+                                <option>TikTok</option>
                                 <option>Ismerős ajánlotta</option>
                                 <option>Egyéb</option>
                             </select>

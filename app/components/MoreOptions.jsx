@@ -1,133 +1,137 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Slider from './Slider';
-import { pics, pics1 } from "@/constants";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { plusOptions } from '@/constants';
 
-const sectionVariants = {
+const containerVariants = {
     hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: { duration: 0.5, when: 'beforeChildren' }
-    }
+    show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
-const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+const itemVariants = {
+    hidden: { opacity: 0, y: 8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' } },
 };
 
-const gridVariants = {
-    hidden: {},
-    show: {
-        transition: { delayChildren: 0.2, staggerChildren: 0.2 }
-    }
-};
-
-const cardVariants = {
-    hidden: { opacity: 0, y: 40, scale: 0.98 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 90, damping: 14 } }
-};
-
-const textBlockVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
-
-const bannerVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.98 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 12 } }
-};
-
-export default function Example() {
+export default function MoreOptions() {
     return (
-        <motion.section
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
-            variants={sectionVariants}
-            className="bg-[#f4f1ec] min-h-screen py-6"
-        >
-            <div className="bg-white/70 backdrop-blur-2xl rounded-2xl shadow-xl p-8 max-w-7xl mx-auto">
-                <motion.div
-                    className="flex justify-center mb-10 items-center mx-auto text-center"
-                    variants={titleVariants}
-                >
-                    <h1 className="text-xl md:text-3xl font-bold text-black">
-                        Fedezd fel a látványtervek közötti különbséget.
-                    </h1>
-                </motion.div>
+        <section className="bg-[#f4f1ec] py-16 md:py-24">
+            <div className="mx-auto max-w-6xl px-4">
+                {/* Header */}
+                <div className="text-center mb-10 md:mb-14">
+                    <h2 className="text-3xl md:text-4xl flex justify-center rounded-2xl mb-14 font-bold max-w-lg shadow-md py-2 mx-auto bg-white/70 border-2 border-[rgba(120,53,15,0.3)]">
+                        Plusz szolgáltatások és opciók
+                    </h2>
 
-                <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-7xl mx-auto px-4"
-                    variants={gridVariants}
-                >
-                    {/* First column */}
-                    <motion.div className="flex flex-col items-center p-4" variants={cardVariants}>
-                        <motion.div
-                            className="w-full transition-transform duration-300 hover:scale-[1.01]"
-                            whileHover={{ y: -2 }}
-                        >
-                            <Slider
-                                images={pics}
-                                aspect="aspect-[4/3]"
-                                interval={4000}
-                                className="shadow-xl rounded-2xl"
-                            />
-                        </motion.div>
-                        <motion.div
-                            className="mt-4 max-w-sm w-full text-center bg-white/30 rounded-2xl p-3 shadow-md backdrop-blur"
-                            variants={textBlockVariants}
-                        >
-                            <p className="font-medium text-gray-800">Egyszerűsített látványterv</p>
-                        </motion.div>
-                    </motion.div>
+                </div>
 
-                    {/* Second column */}
-                    <motion.div className="flex flex-col items-center p-4" variants={cardVariants}>
-                        <motion.div
-                            className="w-full transition-transform duration-300 hover:scale-[1.01]"
-                            whileHover={{ y: -2 }}
-                        >
-                            <Slider
-                                images={pics1}
-                                aspect="aspect-[4/3]"
-                                interval={4000}
-                                className="shadow-xl rounded-2xl"
-                            />
-                        </motion.div>
-                        <motion.div
-                            className="mt-4 max-w-sm w-full text-center bg-white/30 rounded-2xl p-3 shadow-md backdrop-blur"
-                            variants={textBlockVariants}
-                        >
-                            <p className="font-medium text-gray-800">Fotórealisztikus látványterv</p>
-                        </motion.div>
-                    </motion.div>
-                </motion.div>
+                {/* Card */}
+                <div className="rounded-2xl bg-white/70 backdrop-blur shadow-xl ring-1 ring-black/5 px-6 sm:px-8 py-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+                        {/* Left: image / visual */}
+                        <div className="order-2 md:order-1">
+                            <div className="relative overflow-hidden rounded-xl shadow-lg ring-1 ring-black/5">
+                                <img
+                                    src="/logo.png"
+                                    alt="logo"
+                                    className="w-full object-cover"
+                                />
+                            </div>
 
-                <motion.div
-                    className="flex justify-center mb-10 items-center mx-auto text-center"
-                    variants={textBlockVariants}
-                >
-                    <h3 className="mt-[30px] text-lg md:text-xl max-w-4xl text-black">
-                        Nincs két ugyanolyan projekt, így nincs két azonos árképzés sem. A tervezési költség
-                        meghatározása számos tényezőtől függ, például a projektek jellegétől, méretétől,
-                        komplexitásától, az igényelt munka mennyiségétől és az időtartalmától.
-                    </h3>
-                </motion.div>
+                        </div>
 
-                <motion.div
-                    className="flex justify-center mb-10 items-center mx-auto text-center bg-[#AD4949]/80 border border-white/60 shadow-lg rounded-2xl max-w-5xl py-2"
-                    variants={bannerVariants}
-                    whileHover={{ scale: 1.01 }}
-                >
-                    <h3 className="text-lg md:text-2xl max-w-4xl text-white">
-                        <span className="uppercase font-bold">Fontos!</span> <br />
-                        Az árak a kiszállítási díjat, valamint a helyszín felmérésének díját nem tartalmazzák.
-                        Az árak nettó árak és egy tervezési négyzetméterre vonatkoznak.
-                    </h3>
-                </motion.div>
+                        {/* Right: accordion */}
+                        <div className="order-1 md:order-2">
+                            <motion.ul
+                                variants={containerVariants}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, amount: 0.15 }}
+                                className="space-y-3"
+                            >
+                                {plusOptions
+                                    .filter(it => it?.title?.trim())
+                                    .map((it, i) => (
+                                        <AccordionItem
+                                            key={`${it.title}-${i}`}
+                                            title={it.title}
+                                            desc={it.desc}
+                                            priceOnline={it.priceOnline}
+                                            priceInPerson={it.priceInPerson}
+                                        />
+                                    ))}
+                            </motion.ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </motion.section>
+        </section>
     );
+}
+
+function AccordionItem({ title, desc, priceOnline, priceInPerson }) {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <motion.li
+            variants={itemVariants}
+            className="rounded-xl border border-stone-200 bg-stone-50/70 hover:bg-stone-50 transition-colors"
+        >
+            <button
+                type="button"
+                onClick={() => setOpen(v => !v)}
+                aria-expanded={open}
+                aria-controls={slugify(title)}
+                className="w-full px-4 py-3 md:py-4 flex items-center gap-3 justify-between text-left"
+            >
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3">
+                        <span className="truncate text-base md:text-lg font-semibold text-stone-900">
+                          {title}
+                        </span>
+                    </div>
+                </div>
+                <motion.span
+                    animate={{ rotate: open ? 180 : 0 }}
+                    transition={{ duration: 0.18 }}
+                    className="shrink-0 text-stone-700"
+                    aria-hidden="true"
+                >
+                    <ChevronDown className="w-5 h-5" />
+                </motion.span>
+            </button>
+
+            <AnimatePresence initial={false}>
+                {open && (
+                    <motion.div
+                        id={slugify(title)}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-4 pb-4 md:pb-5 text-sm md:text-base leading-relaxed text-stone-700">
+                            <p>{desc}</p>
+                        </div>
+                        <div className="px-4 pb-4 md:pb-5 text-sm md:text-base leading-relaxed text-stone-700">
+                            <p>{priceOnline}</p>
+                            <p>{priceInPerson}</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.li>
+    );
+}
+
+// safer slug
+function slugify(s = 'item') {
+    return String(s)
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
 }

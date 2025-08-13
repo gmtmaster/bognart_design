@@ -38,7 +38,7 @@ export default function ProjectPage({ params }) {
                         )}
                     </div>
                     <a
-                        href="/#projects"
+                        href="/#referenciak"
                         className="text-stone-600 hover:text-amber-700 underline underline-offset-4"
                     >
                         ← Vissza a projektekhez

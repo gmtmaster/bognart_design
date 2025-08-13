@@ -12,6 +12,7 @@ import Contact from "@/app/components/Contact";
 import PricingSection from "@/app/components/PricingSection";
 import Cards from "@/app/components/Cards";
 import FAQ from "@/app/components/FAQ";
+import Options from "@/app/components/Options";
 import MoreOptions from "@/app/components/MoreOptions";
 import Footer from "@/app/components/Footer";
 import CookiePolicyModal from "@/app/components/CookiePolicy";
@@ -23,17 +24,17 @@ export default function Home() {
   return (
 
         <>
-
             <Navbar/>
             <Hero />
             <AboutMe />
-          <Cards />
+            <Cards />
             <Showcase />
-          <Partners />
-          <PricingSection />
+            <Partners />
+            <PricingSection />
+            <Options />
             <MoreOptions />
             <FAQ />
-          <Contact />
+            <Contact />
             <Footer />
         </>
 

@@ -15,8 +15,8 @@ export default function Partners() {
 
     return (
         <section className="bg-[#f4f1ec] py-12">
-            <div className="flex justify-center mb-10 items-center mx-auto text-center" >
-                <h3 className="text-3xl lg:text-4xl font-bold text-black" >
+            <div className="flex bg-white/60 rounded-2xl max-w-xs shadow-md py-2 justify-center mb-14 items-center mx-auto text-center border-2 border-[rgba(120,53,15,0.3)]" >
+                <h3 className="text-3xl lg:text-4xl font-bold text-black " >
                     Partnerek
                 </h3>
             </div>

@@ -171,6 +171,34 @@ pics1 = [
     '/slider/50.jpg',
 ];
 
+const plusOptions = [
+    {
+        title: 'Látványterv',
+        desc: 'Amennyiben választott szolgáltatásod nem tartalmazza, vagy utólag módosítanál a látvány terveken, lehetőséged van plusz szolgáltatásként kérni.',
+        priceOnline: 'Árajánlatkérés szükséges',
+        priceInPerson: '',
+    },
+    {
+        title: 'Tanácsadás',
+        desc: 'Tanácsadás 60 és 120 perces időtartalommal választható.',
+        priceOnline: 'Online 20.000 Ft / óra',
+        priceInPerson: 'Személyesen 30.000 Ft / óra'
+    },
+    {
+        title: 'Közös vásárlás',
+        desc: 'Választott csomagodhoz járt bevásárló lista segítségével, ha szükségét érzed elmegyek veled beszerezni a bútorokat, burkolatokat és egyéb kiegészítőket, hogy segítsek a döntésekben.',
+        priceOnline: 'Online 20.000 Ft / óra',
+        priceInPerson: 'Személyesen 30.000 Ft / óra'
+    },
+    {
+        title: 'Kiszállási díj',
+        desc: '',
+        priceOnline: '20.000 Ft-tól / nap',
+        priceInPerson: '',
+    },
+
+];
+
 export {
     navLinks,
     cards,
@@ -178,4 +206,5 @@ export {
     partners,
     pics,
     pics1,
+    plusOptions,
 };

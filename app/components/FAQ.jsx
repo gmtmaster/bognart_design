@@ -78,7 +78,7 @@ export default function FAQ() {
                         </p>
                     </FAQItem>
 
-                    <FAQItem title="Hogyan zajlik a tervezési folyamat?">
+                    <FAQItem title="Hogyan zajlik a tervezés?">
                         <p className="mb-3">
                             Az árajánlat elfogadása és a szerződés után egyeztetett személyes találkozón részletesen átbeszéljük a
                             projektet. Érdemes inspirációs képeket is hozni (pl. Pinterest), hogy pontosan lássuk az ízlést és

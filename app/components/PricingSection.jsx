@@ -43,7 +43,9 @@ export default function PricingSection() {
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
         >
-            <h2 className="text-4xl font-bold text-center mb-12">Szolgáltatások</h2>
+            <div className="flex justify-center rounded-2xl mb-14  max-w-xs shadow-md py-2 mx-auto bg-white/70 border-2 border-[rgba(120,53,15,0.3)]">
+                <h2 className="text-4xl font-bold">Szolgáltatások</h2>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-9xl mx-auto px-4">
                 {plans.map((plan, idx) => (

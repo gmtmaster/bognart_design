@@ -17,7 +17,7 @@ export default function Hero() {
                 transition={{ delay: 0.6, duration: 0.5, ease: 'easeOut' }}
                 className="container mx-auto text-center"
             >
-                <h1 className="text-3xl md:text-5xl font-bold mb-8">
+                <h1 className="text-3xl md:text-5xl font-bold pb-[150px]">
                     Időtálló tervezés, harmonikus részletekkel
                 </h1>
 
