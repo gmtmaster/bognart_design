@@ -97,7 +97,7 @@ export default function Navbar() {
                                         prefetch={false}
                                         className="relative group text-gray-800 font-semibold hover:text-red-900 transition-colors duration-300"
                                     >
-                                        Árajánlat
+                                        Árajánlatkérés
                                         <span className="absolute bottom-[-6px] left-0 w-0 h-0.5 bg-red-900 group-hover:w-full transition-all duration-300" />
                                     </Link>
                                 </motion.li>
@@ -193,7 +193,7 @@ export default function Navbar() {
                                 <a href="#" aria-label="TikTok" className="text-stone-500 hover:text-red-800 transition-colors">
                                     <FaTiktok className="w-5 h-5" />
                                 </a>
-                                <a href="#" aria-label="Instagram" className="text-stone-500 hover:text-red-800 transition-colors">
+                                <a href="https://instagram.com/bognart_interior_design" aria-label="Instagram" className="text-stone-500 hover:text-red-800 transition-colors">
                                     <FiInstagram className="w-5 h-5" />
                                 </a>
                                 <a href="#" aria-label="Facebook" className="text-stone-500 hover:text-red-800 transition-colors">

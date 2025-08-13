@@ -149,6 +149,8 @@ function Dashboard({ session }) {
     const [contacts, setContacts] = useState([]);
     const [selected, setSelected] = useState(null); // the selected inquiry (object)
     const [toast, setToast] = useState(null);
+    const [outbox, setOutbox] = useState([]);
+    const [selectedEmail, setSelectedEmail] = useState(null);
 
 
     useEffect(() => {
@@ -156,13 +158,15 @@ function Dashboard({ session }) {
 
         async function load() {
             setLoading(true);
-            const [{ data: inq, error: inqErr }, { data: con, error: conErr }] = await Promise.all([
+            const [{ data: inq, error: inqErr }, { data: con, error: conErr }, { data: out, error: outErr }] = await Promise.all([
                 supabase.from('inquiries').select('*').order('created_at', { ascending: false }),
                 supabase.from('contact_messages').select('*').order('created_at', { ascending: false }).limit(12),
+                supabase.from('outbox_emails').select('*').order('sent_at', { ascending: false }).limit(10),
             ]);
 
             if (inqErr) console.error('[admin] fetch inquiries error', inqErr);
             if (conErr) console.error('[admin] fetch contacts error', conErr);
+            if (outErr) console.error('[admin] fetch outbox error', outErr);
 
             if (!mounted) return;
 
@@ -173,6 +177,7 @@ function Dashboard({ session }) {
             })));
 
             setContacts(con || []);
+            setOutbox(out || []);
             setLoading(false);
         }
 
@@ -188,10 +193,23 @@ function Dashboard({ session }) {
             .on('postgres_changes', { event: '*', schema: 'public', table: 'contact_messages' }, load)
             .subscribe();
 
+        const ch3 = supabase
+            .channel('outbox-stream')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'outbox_emails' }, async () => {
+                const { data } = await supabase
+                    .from('outbox_emails')
+                    .select('*')
+                    .order('sent_at', { ascending: false })
+                    .limit(10);
+                setOutbox(data || []);
+            })
+            .subscribe();
+
         return () => {
             mounted = false;
             supabase.removeChannel(ch1);
             supabase.removeChannel(ch2);
+            supabase.removeChannel(ch3);
         };
     }, []);
 
@@ -276,7 +294,11 @@ function Dashboard({ session }) {
                     counts={counts}
                     contacts={contacts}
                     onOpenContact={(contact) => setSelectedContact(contact)}
+                    onOpenContact={(contact) => setSelectedContact(contact)}
+                    onOpenOutbox={(email) => setSelectedEmail(email)}
                 />
+
+
 
                 <main>
                     <motion.div
@@ -404,7 +426,7 @@ function Topbar({ onSignOut, user }) {
 }
 
 // change the function signature
-function Sidebar({ counts, contacts, onOpenContact }) {
+function Sidebar({ counts, contacts, onOpenContact, outbox, onOpenOutbox }) {
     return (
         <aside className="space-y-4">
             <div className="bg-white/70 backdrop-blur-2xl rounded-2xl border border-white/60 shadow-xl p-4">
@@ -419,7 +441,7 @@ function Sidebar({ counts, contacts, onOpenContact }) {
 
 
             <MessagesTable contacts={contacts} onOpen={onOpenContact} />
-
+            <OutboxCard outbox={outbox} onOpenEmail={onOpenOutbox} />
 
         </aside>
     );
@@ -621,19 +643,51 @@ function DetailsDrawer({ inquiry, onClose, onStatusChange, onToast }) {
         return out;
     }, [inquiry]);
 
-    const sendEmail = async () => {
-        setSending(true);
-        try {
-            // TODO: call your /api/admin/reply (unchanged)
-            await new Promise((r) => setTimeout(r, 900));
-            onToast?.({ type: 'success', message: 'Válasz elküldve az ügyfélnek.' });
-            onStatusChange?.('answered');
-        } catch (e) {
-            onToast?.({ type: 'error', message: 'Hiba történt az e-mail küldésekor.' });
-        } finally {
-            setSending(false);
-        }
-    };
+        const sendEmail = async () => {
+            if (!inquiry) return;
+            if (!inquiry.email) {
+                onToast?.({ type: 'error', message: 'Hiányzik az ügyfél e-mail címe.' });
+                return;
+            }
+
+            setSending(true);
+            try {
+                const payload = {
+                    to: inquiry.email,
+                    subject: reply.subject?.trim() || `Re: ${inquiry.subject ?? 'Árajánlatkérés'}`,
+                    message: reply.message || '',
+                    footerNote: 'Ha kérdése van, erre a levélre válaszolhat.',
+                    // Optionally attach a dynamically generated PDF later:
+                    // attachments: [{ filename: 'ajanlat.pdf', path: 'https://...' }],
+                };
+
+                const r = await fetch('/api/admin/reply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!r.ok) throw new Error('Send failed');
+                onToast?.({ type: 'success', message: 'Válasz elküldve az ügyfélnek.' });
+                onStatusChange?.('answered');
+
+                // after successful fetch('/api/admin/reply')
+                await supabase.from('outbox_emails').insert({
+                    inquiry_id: inquiry?.id ?? null,       // DetailsDrawer-ben
+                    contact_id: null,                       // DetailsDrawer-ben
+                    to_email: payload.to,
+                    subject: payload.subject,
+                    message: payload.message,
+                    sent_at: new Date().toISOString()
+                });
+
+            } catch (e) {
+                console.error(e);
+                onToast?.({ type: 'error', message: 'Hiba történt az e-mail küldésekor.' });
+            } finally {
+                setSending(false);
+            }
+        };
 
     return (
         <AnimatePresence>
@@ -833,18 +887,47 @@ function ContactDrawer({ contact, onClose, onStatusChange, onToast, accent = '#A
 
     const sendEmail = async () => {
         if (!contact) return;
+        if (!contact.email) {
+            onToast?.({ type: 'error', message: 'Hiányzik az e-mail cím.' });
+            return;
+        }
         setSending(true);
         try {
-            // 🔧 Hook this to your email endpoint (/api/admin/reply-contact)
-            await new Promise((r) => setTimeout(r, 900));
+            const payload = {
+                to: contact.email,
+                subject: reply.subject?.trim() || `Re: Kapcsolatfelvétel – ${contact.name ?? ''}`.trim(),
+                message: reply.message || '',
+                footerNote: 'Ha kérdése van, erre a levélre válaszolhat.',
+            };
+
+            const r = await fetch('/api/admin/reply', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (!r.ok) throw new Error('Send failed');
             onToast?.({ type: 'success', message: 'Válasz elküldve.' });
-            onStatusChange?.('answered'); // keep DB in sync
+            onStatusChange?.('answered');
+
+
+            await supabase.from('outbox_emails').insert({
+                inquiry_id: null,
+                contact_id: contact?.id ?? null,
+                to_email: payload.to,
+                subject: payload.subject,
+                message: payload.message,
+                sent_at: new Date().toISOString()
+            });
+
         } catch (e) {
+            console.error(e);
             onToast?.({ type: 'error', message: 'Hiba történt a küldésnél.' });
         } finally {
             setSending(false);
         }
     };
+
 
     return (
         <AnimatePresence>
@@ -1045,4 +1128,100 @@ function createMockInquiries() {
             created_at: now - 1000 * 60 * 60 * 72,
         },
     ];
+}
+
+function OutboxCard({ outbox, onOpenEmail }) {
+    return (
+        <div className="bg-white/70 backdrop-blur-2xl rounded-2xl border border-white/60 shadow-xl p-4">
+            <h3 className="font-semibold mb-3">Kimenő levelek</h3>
+            {(!outbox || outbox.length === 0) ? (
+                <p className="text-sm text-gray-600">Még nincs elküldött e-mail.</p>
+            ) : (
+                <ul className="divide-y divide-gray-100">
+                    {outbox.map((e) => (
+                        <li key={e.id} className="py-2">
+                            <button
+                                className="w-full text-left group"
+                                onClick={() => onOpenEmail?.(e)}
+                                title={e.subject}
+                            >
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="min-w-0">
+                                        <div className="truncate text-sm font-medium text-gray-900">
+                                            {e.subject}
+                                        </div>
+                                        <div className="truncate text-xs text-gray-600">
+                                            {e.to_email}
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500 shrink-0">
+                                        {formatDate(e.sent_at)}
+                                    </div>
+                                </div>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+}
+
+function OutboxDrawer({ email, onClose }) {
+    return (
+        <AnimatePresence>
+            {email && (
+                <motion.aside
+                    initial={{ x: '100%' }}
+                    animate={{ x: 0 }}
+                    exit={{ x: '100%' }}
+                    transition={{ type: 'spring', stiffness: 140, damping: 20 }}
+                    className="fixed inset-y-0 right-0 w-full max-w-xl bg-white shadow-2xl z-50"
+                >
+                    <div className="h-full grid grid-rows-[auto,1fr]">
+                        <div className="border-b px-4 py-3 flex items-center justify-between bg-white/80 backdrop-blur">
+                            <div>
+                                <div className="text-sm text-gray-500">Kimenő levél</div>
+                                <h3 className="text-lg font-semibold truncate max-w-[20rem]">{email.subject}</h3>
+                            </div>
+                            <button className="rounded-full p-2 hover:bg-gray-100" onClick={onClose} aria-label="Bezárás">
+                                <X />
+                            </button>
+                        </div>
+
+                        <div className="overflow-y-auto p-4 space-y-6">
+                            <section className="bg-gray-50 rounded-xl border border-gray-200 p-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                                    <Field label="Címzett" value={email.to_email} copyable />
+                                    <Field label="Küldve" value={formatDate(email.sent_at)} />
+                                    {email.inquiry_id && <Field label="Inquiry ID" value={email.inquiry_id} copyable />}
+                                    {email.contact_id && <Field label="Contact ID" value={email.contact_id} copyable />}
+                                </div>
+                            </section>
+
+                            <section className="bg-white rounded-xl border border-gray-200 p-4">
+                                <h4 className="font-semibold mb-2">Üzenet</h4>
+                                <div className="text-sm text-gray-800 whitespace-pre-wrap">
+                                    {email.message}
+                                </div>
+                            </section>
+
+                            <div className="flex justify-end">
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(
+                                            `Tárgy: ${email.subject}\nCímzett: ${email.to_email}\nKüldve: ${formatDate(email.sent_at)}\n\n${email.message}`
+                                        );
+                                    }}
+                                    className="text-sm rounded-lg border px-3 py-1.5 hover:bg-gray-50"
+                                >
+                                    Másolás
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </motion.aside>
+            )}
+        </AnimatePresence>
+    );
 }
