@@ -34,7 +34,7 @@ export default function MoreOptions() {
                         <div className="order-2 md:order-1">
                             <div className="relative overflow-hidden rounded-xl shadow-lg ring-1 ring-black/5">
                                 <img
-                                    src="/logo.png"
+                                    src="/next_steps.jpg"
                                     alt="logo"
                                     className="w-full object-cover"
                                 />
