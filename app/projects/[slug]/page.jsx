@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getProject, getProjectParams } from "@/lib/projects";
 import ProjectGalleryClient from "./ProjectGalleryClient";
+import Link from "next/link";
 
 export function generateStaticParams() {
     return getProjectParams();
@@ -37,12 +38,12 @@ export default function ProjectPage({ params }) {
                             <p className="mt-3 text-stone-600 max-w-2xl">{project.blurb}</p>
                         )}
                     </div>
-                    <a
+                    <Link
                         href="/#referenciak"
                         className="text-stone-600 hover:text-amber-700 underline underline-offset-4"
                     >
                         ← Vissza a projektekhez
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Animated gallery lives in a client component */}

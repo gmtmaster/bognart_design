@@ -14,10 +14,10 @@ export default function PrivacyPage() {
                 <div className="rounded-xl border border-stone-200 bg-white/60 p-6">
                     <h2 className="text-lg font-semibold mb-3">1. Adatkezelő adatai</h2>
                     <ul className="space-y-1 text-sm leading-relaxed">
-                        <li><span className="font-medium">Adatkezelő neve:</span> 🔧 BOGNART</li>
-                        <li><span className="font-medium">Székhely:</span> 🔧 [cím]</li>
-                        <li><span className="font-medium">E-mail:</span> 🔧 [email]</li>
-                        <li><span className="font-medium">Weboldal:</span> 🔧 [domain]</li>
+                        <li><span className="font-medium">Adatkezelő neve:</span> Bognart Interior Design</li>
+                        <li><span className="font-medium">Székhely:</span> 6200 Kiskőrös, Petőfi Sándor út 101. [cím]</li>
+                        <li><span className="font-medium">E-mail:</span> info@bognart.com</li>
+                        <li><span className="font-medium">Weboldal:</span> bognart.com</li>
                         <li><span className="font-medium">Hosting:</span> Domain: Dynadot.com, hosztolás: Vercel.</li>
                         <li><span className="font-medium">Adatbázis:</span> Supabase (csak a szükséges adatokat tároljuk).</li>
                     </ul>

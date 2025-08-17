@@ -28,7 +28,6 @@ export default function Home() {
             <Hero />
             <AboutMe />
             <Cards />
-            <Showcase />
             <Partners />
             <PricingSection />
             <Options />

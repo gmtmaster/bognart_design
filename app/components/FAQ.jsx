@@ -16,7 +16,7 @@ const ITEM = {
 export default function FAQ() {
     return (
         <section id="gyik" className="py-12 md:py-24">
-            <div className="mx-auto max-w-2xl md:max-w-3xl px-4">
+            <div className="mx-auto max-w-2xl md:max-w-3xl px-4 overflow-visible">
                 <h2 className="text-2xl md:text-4xl font-bold text-stone-900">
                     Gyakori kérdések
                 </h2>
@@ -29,7 +29,7 @@ export default function FAQ() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.12 }}
-                    className="mt-6 md:mt-8 space-y-2.5 md:space-y-3"
+                    className="mt-6 md:mt-8 space-y-2.5 md:space-y-3 overflow-visible"
                 >
                     <FAQItem title="Milyen árakon érhetők el szolgáltatásaink?">
                         <p className="mb-3">
@@ -94,6 +94,72 @@ export default function FAQ() {
                         </p>
                     </FAQItem>
 
+                    <FAQItem title="Tervezési folyamat">
+                        <p className="mb-3">
+                            <span className="font-bold">01. Kapcsolatfelvétel az ügyféllel</span> – Az első lépés a megfelelő szolgáltatási csomag kiválasztása
+                            vagy egyedi árajánlat kérése. Ezt követően 48 órán belül felveszem Önnel a kapcsolatot emailben
+                            vagy telefonon, hogy egy rövid beszélgetés keretében pontosítsuk a tervezési igényeket.
+                            Bemutatom a csomagok tartalmát és a szolgáltatási díjak várható nagyságrendjét.
+                            Amennyiben ajánlatom megfelel, egyeztetjük a további lépéseket és az első személyes konzultáció időpontját.
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">02. Első személyes konzultáció</span> – A személyes találkozót előre egyeztetett időpontban, akár a
+                            tervezendő helyszínen tartjuk. Itt részletesen átbeszéljük elképzeléseit, igényeit, valamint
+                            tisztázzuk a tervezési folyamat menetét és az ütemtervet. Megosztjuk egymással az inspirációs anyagokat,
+                            és áttekintjük a konzultáció előtt kitöltött kérdőív válaszait. A kérdőívet legkésőbb a találkozó előtti napig szükséges visszaküldeni.
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">03. Tervezési folyamat és költségvetés</span> – Az első konzultáció után részletesen áttekintjük a
+                            költségvetést és a választott tervezési csomag tartalmát. Kiküldésre kerül a szerződés, melynek
+                            aláírását követően megkezdődik a tervezési munka az egyeztetett ütemterv szerint.
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">04. Tervezési folyamat kezdete</span> – A szerződés aláírása után megkezdjük az első tervdokumentáció
+                            elkészítését, amely egy vázlatos, koncepcionális anyag. Ebből az anyagból Ön könnyen kiválaszthatja
+                            a számára legmegfelelőbb irányt.
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">05. Második személyes konzultáció</span> – A találkozón bemutatjuk az első tervdokumentációt, amely több
+                            berendezési és kialakítási opciót tartalmaz a felmérések és igények alapján. Bemutatásra kerülnek
+                            a vázlatos konszignációs alaprajzok, falnézetek, valamint az első 3D látványtervek.
+                            Ezen a ponton kerül sor a burkolatok, bútorok, szaniterek és egyéb design elemek kiválasztására.
+                            Igény esetén vállaljuk a beszerzés és rendelés lebonyolítását is. A tervezési folyamat alatt
+                            folyamatosan kapcsolatban állunk Önnel.
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">06. Második tervezési szakasz</span> – A második konzultáció során egyeztetett módosításokat elvégezzük,
+                            véglegesítjük a konszignációs alaprajzokat és elkészítjük a részletes 3D látványterveket.
+                            Elkészülnek a csomagban foglalt további műszaki és kivitelezési tervek is (pl. falnézetek,
+                            elektromos, világítási, bontási és falazási tervek).
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">07. Harmadik személyes konzultáció</span> – A harmadik találkozón bemutatjuk a majdnem végleges
+                            tervdokumentációt, ahol átbeszéljük az utolsó módosítási igényeket. Ezt követően elkészítjük
+                            a kivitelezéshez szükséges végleges terveket. Ha szükséges, további konzultációkat is biztosítunk,
+                            amelyek igény szerint külön szolgáltatásként rendelhetők meg.
+                        </p>
+
+                        <p className="mb-3">
+                            <span className="font-bold">08. Végleges tervdokumentáció átadása</span> – Az ütemtervnek megfelelően a tervezési folyamat végéhez érünk,
+                            és a kivitelezési terveket elektronikus formában átadjuk. Igény esetén személyes konzultáció keretében is
+                            átbeszéljük a dokumentációt. A végleges tervcsomag minden olyan tervet tartalmaz, amely a sikeres
+                            kivitelezéshez szükséges.
+                        </p>
+
+                        <p>
+                            <span className="font-bold">09. Kivitelezés támogatása</span> – Minden csomag kiválasztása előtt egyeztetünk, hogy igényli-e a kivitelezés
+                            alatti támogatást. Amennyiben ezt kéri, folyamatos kapcsolatot tartunk a kivitelező szakemberekkel,
+                            felügyeljük a munkálatok előrehaladását, és biztosítjuk, hogy minden a terv szerint valósuljon meg.
+                            Ez a szolgáltatás időt és stresszt takarít meg Önnek, valamint díjazása kiszállási díj formájában történik.
+                        </p>
+                    </FAQItem>
+
                     <FAQItem title="Egy helyiség megtervezése is elérhető, vagy csak teljes ingatlanra dolgoznak?">
                         <p className="mb-3">
                             Természetesen egyetlen helyiség tervezését is vállaljuk – ugyanazzal a precizitással és odafigyeléssel,
@@ -139,7 +205,7 @@ function FAQItem({ title, children }) {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: 'easeInOut' }}
-                        className="overflow-hidden"
+                        className="overflow-visible"
                     >
                         <div className="mt-2 md:mt-3 text-stone-700 text-sm md:text-base leading-relaxed md:leading-[1.8] pr-0.5">
                             {children}

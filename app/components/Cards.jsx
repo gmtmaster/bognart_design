@@ -34,9 +34,9 @@ function Cards() {
     }, []);
 
     return (
-        <section  id="cardsWrapper" className="cardsWrapper " ref={wrapperRef}>
+        <section  id="referenciak" className="cardsWrapper " ref={wrapperRef}>
 
-        <div className="cardsTrack" ref={trackRef} id="referenciak">
+        <div className="cardsTrack" ref={trackRef} >
 
                 {/* 🔧 Custom first card — modify freely */}
             <div className="ml-4 py-40 px-10 md:px-20 lg:px-40 bg-[#f4f1ec]  shadow-xl flex flex-col">

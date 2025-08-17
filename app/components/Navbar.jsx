@@ -107,13 +107,13 @@ export default function Navbar() {
 
                         {/* Socials */}
                         <div className="flex space-x-5">
-                            <a href="#" aria-label="TikTok">
+                            <a href="https://www.tiktok.com/@bognart.interior.design?lang=en" aria-label="TikTok">
                                 <FaTiktok className="w-5 h-5 text-stone-500 hover:text-red-800 transition-colors duration-300" />
                             </a>
-                            <a href="#" aria-label="Instagram">
+                            <a href="https://instagram.com/bognart_interior_design" aria-label="Instagram">
                                 <FiInstagram className="w-5 h-5 text-stone-500 hover:text-red-800 transition-colors duration-300" />
                             </a>
-                            <a href="#" aria-label="Facebook">
+                            <a href="https://www.facebook.com/share/1DHX4gkW35/?mibextid=wwXIfr" aria-label="Facebook">
                                 <FiFacebook className="w-5 h-5 text-stone-500 hover:text-red-800 transition-colors duration-300" />
                             </a>
                         </div>

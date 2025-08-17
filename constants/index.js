@@ -187,8 +187,7 @@ const plusOptions = [
     {
         title: 'Közös vásárlás',
         desc: 'Választott csomagodhoz járt bevásárló lista segítségével, ha szükségét érzed elmegyek veled beszerezni a bútorokat, burkolatokat és egyéb kiegészítőket, hogy segítsek a döntésekben.',
-        priceOnline: 'Online 20.000 Ft / óra',
-        priceInPerson: 'Személyesen 30.000 Ft / óra'
+        priceInPerson: 'Személyesen 17.500 Ft / alkalom'
     },
     {
         title: 'Kiszállási díj',
