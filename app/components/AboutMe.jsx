@@ -5,10 +5,7 @@ import { motion } from 'framer-motion';
 
 const container = {
     hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: { staggerChildren: 0.18, delayChildren: 0.1 },
-    },
+    show: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.1 } },
 };
 
 const item = {
@@ -23,22 +20,30 @@ export default function RolamSection() {
         `Az alkotómunka során inspirációt merítek a környezetből, a természetből, és a különböző kultúrákból, hogy egyedi és izgalmas belső tereket hozzak létre. Hiszem, hogy a környezet, amelyben élünk, jelentősen befolyásolja életmódunkat és hangulatunkat, ezért nagy hangsúlyt fektetek arra, hogy az általam tervezett terek nemcsak szépek legyenek, hanem kellemes életteret is nyújtsanak az embereknek.`,
         `Munkám során együttműködök az ügyfelekkel, hogy megismerjem elképzeléseiket és igényeiket, majd ezek alapján tervezek és alkotok. Fontos számomra, hogy minden projekt egyedi legyen, hiszen minden otthon és minden ügyfél más és más. A kreativitásom és a szakértelmem segítségével olyan teret hozok létre, amely az ügyfeleimnek tökéletesen megfelel.`,
         `Szenvedéllyel és odaadással végzem a munkámat, és büszke vagyok arra, hogy olyan otthonokat hozhatok létre, amelyekben az emberek boldogan élnek. Várom, hogy új kihívásokkal és projektekkel találkozhassak, és segíthessek újabb és újabb terek megtervezésében és megvalósításában.`,
-        `Ha Ön is álmodozik egy egyedi, harmonikus és stílusos otthont létrehozni, akkor keressen meg, és együtt dolgozva valóra válthatjuk az elképzeléseit!`,
+        `Ha Ön is álmodozik egy egyedi, harmonikus és stílusos otthont létrehozni, akkor keressen meg, és együtt dolgozva valóra válthatjuk az elképzeléseit!`,,
     ];
 
     return (
-        <section id="rolam" className="py-16 md:py-24 bg-[#f4f1ec]">
+        <section
+            id="rolam"
+            aria-labelledby="rolam-cim"
+            className="py-16 md:py-24 bg-[#f4f1ec]"
+        >
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4">
-                {/* Left: text card */}
-                <motion.div
+                {/* Bal: tartalom */}
+                <motion.article
                     variants={container}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
                     className="bg-stone-50/90 rounded-2xl shadow-lg p-8 md:p-10 border border-stone-200"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-4">Rólam</h2>
-                    <hr className="border-stone-200 mb-6" />
+                    <header className="mb-6">
+                        <h2 id="rolam-cim" className="text-4xl md:text-5xl font-bold text-stone-900">
+                            Rólam
+                        </h2>
+                        <hr className="border-stone-200 mt-4" />
+                    </header>
 
                     <div className="space-y-5 text-stone-800 leading-relaxed text-lg">
                         {paragraphs.map((t, i) => (
@@ -48,49 +53,43 @@ export default function RolamSection() {
                         ))}
                     </div>
 
-                    <motion.div variants={item} className="mt-8">
-                        <button
-                            onClick={() => {
-                                document.querySelector('#kapcsolat')?.scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            }}
-                            className="button">
+                    <motion.p variants={item} className="mt-8">
+                        <a
+                            href="#kapcsolat"
+                            className="button inline-flex items-center justify-center"
+                        >
                             Elérhetőségek
-                        </button>
-                    </motion.div>
-                </motion.div>
+                        </a>
+                    </motion.p>
+                </motion.article>
 
-                {/* Right: images */}
-                <div className="flex flex-col gap-4">
-                    {/* Big image */}
-                    <div className="relative h-[100vh] sm:h-96 md:h-[100vh] rounded-2xl overflow-hidden shadow-xl">
+                {/* Jobb: fotó + aláírás */}
+                <aside aria-label="Portré és aláírás" className="flex flex-col gap-4">
+                    <figure className="relative h-[100vh] sm:h-96 md:h-[100vh] rounded-2xl overflow-hidden shadow-xl">
                         <Image
                             src="/csenge.jpg"
-                            alt="Belsőépítészeti hangulatkép"
+                            alt="Bognár Csenge belsőépítész portréja"
                             fill
                             className="object-cover object-center"
                             priority
                             sizes="(min-width: 768px) 50vw, 100vw"
                         />
-                        {/* optional subtle overlay */}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-stone-100/20 to-transparent" />
-                    </div>
+                        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-stone-100/20 to-transparent" />
+                        <figcaption className="sr-only">BOGNART Belsőépítész Studio</figcaption>
+                    </figure>
 
-                    {/* Signature image (same width, less height) */}
-                    <div className="relative h-24 sm:h-28 md:h-32 rounded-2xl overflow-hidden shadow-xl border border-stone-200 bg-stone-50/30">
+                    <figure className="relative h-24 sm:h-28 md:h-32 rounded-2xl overflow-hidden shadow-xl border border-stone-200 bg-stone-50/30">
                         <Image
-                            src="/signature.png"          // put your signature image in /public
-                            alt="Aláírás"
+                            src="/signature.png"
+                            alt="Bognár Csenge aláírása"
                             fill
                             className="object-contain object-left md:object-center"
                             sizes="(min-width: 768px) 50vw, 100vw"
                             priority={false}
                         />
-                    </div>
-                </div>
-
-
+                        <figcaption className="sr-only">Aláírás</figcaption>
+                    </figure>
+                </aside>
             </div>
         </section>
     );
