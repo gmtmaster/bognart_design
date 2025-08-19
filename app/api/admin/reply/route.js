@@ -5,34 +5,36 @@ import { buildReplyHtml, buildPlainText } from '@/lib/emailTemplates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Basic allowlist (optional): only allow logged-in admin from your domain to call this.
-// You can also check Supabase auth via cookies in a server action if needed.
-
 export async function POST(req) {
     try {
         const body = await req.json();
         const {
-            to,              // string | string[]
-            subject,         // string
-            message,         // string (your typed reply)
-            footerNote,      // optional: "Ha kérdése van, erre a levélre válaszolhat."
-            attachments = [],// optional: [{ filename, path|content, mime? }]
+            to,               // string | string[] — customer's email (the one who wrote in)
+            subject,          // string
+            message,          // string
+            footerNote,       // optional
+            attachments = [], // optional: [{ filename, path|content, mime? }]
         } = body || {};
 
         if (!to || !subject || !message) {
-            return NextResponse.json({ error: 'Missing fields (to, subject, message required).' }, { status: 400 });
+            return NextResponse.json(
+                { error: 'Missing fields (to, subject, message required).' },
+                { status: 400 }
+            );
         }
 
-        const brandName = process.env.BRAND_NAME || 'Studio';
-        const brandUrl  = process.env.BRAND_URL  || 'https://example.com';
+        const brandName = process.env.BRAND_NAME || 'BOGNART';
+        const brandUrl  = process.env.BRAND_URL  || 'https://bognart.com';
 
         const html = buildReplyHtml({ brandName, brandUrl, subject, message, footerNote });
         const text = buildPlainText({ brandName, subject, message });
 
-        const from     = process.env.FROM_EMAIL || 'no-reply@example.com';
-        const reply_to = process.env.REPLY_TO   || undefined;
+        // 🔒 Fixed sender + friendly name. Ensure `info@bognart.com` is verified in Resend.
+        const from = 'BOGNART <info@bognart.com>';
 
-        // Resend supports {content|path} attachments
+        // Optional: make replies land in the same inbox
+        const reply_to = 'info@bognart.com';
+
         const res = await resend.emails.send({
             from,
             to,
@@ -40,7 +42,7 @@ export async function POST(req) {
             html,
             text,
             reply_to,
-            attachments, // pass-through
+            attachments, // passthrough
         });
 
         return NextResponse.json({ id: res?.data?.id || null, ok: true });

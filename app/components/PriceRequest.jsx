@@ -55,6 +55,18 @@ function PriceRequest() {
         return Array.isArray(json) ? json[0] : json;
     }
 
+    async function notifyAdmin(summary) {
+        try {
+            await fetch('/api/inquiry-admin-ping', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ summary }),
+            });
+        } catch (_) {
+            // Don't block UX on email failure; just ignore.
+        }
+    }
+
     async function handleSubmit(e) {
         console.log('[submit] handler entered');
         e.preventDefault();
@@ -203,6 +215,22 @@ function PriceRequest() {
             if (!res.ok) {
                 throw new Error(`RPC failed (${res.status}): ${body?.message || res.statusText}`);
             }
+
+            //New: send Resend admin ping
+
+            const summaryLines = [
+                `Név: ${nameVal || '—'}`,
+                `Email: ${emailVal || '—'}`,
+                `Telefon: ${phoneVal || '—'}`,
+                `Szolgáltatások: ${(services && services.length) ? services.join(', ') : '—'}`,
+                `Csomag: ${packageVal || '—'}`,
+                `Helyszín: ${locationVal || '—'}`,
+                `Méret: ${sizeVal || '—'}`,
+                `Állapot: ${conditionVal || '—'}`,
+                `Forrás: ${refVal || '—'}`,
+            ];
+
+            notifyAdmin(summaryLines.join('\n'));
 
             // ----- 5) UX success -----
             setSubmitMsg('Köszönjük! Az árajánlatkérésedet megkaptuk. Hamarosan jelentkezünk.');

@@ -42,7 +42,7 @@ export default function ProjectPage({ params }) {
                         href="/#referenciak"
                         className="text-stone-600 hover:text-amber-700 underline underline-offset-4"
                     >
-                        ← Vissza a projektekhez
+                        ← Vissza a referenciákhoz
                     </Link>
                 </div>
 

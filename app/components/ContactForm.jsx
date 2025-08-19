@@ -21,6 +21,29 @@ export default function ContactForm() {
         console.groupEnd();
     }, []);
 
+    async function notifyAdminContactPing(payload) {
+        try {
+            const summaryLines = [
+                'Új kérdés érkezett',
+                `Név: ${payload.name || '—'}`,
+                `Email: ${payload.email || '—'}`,
+                `Telefon: ${payload.phone || '—'}`,
+                `Üzenet: ${payload.message?.slice(0, 400) || '—'}`,
+            ];
+            await fetch('/api/inquiry-admin-ping', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    subject: 'Új kérdés érkezett',           // ← override subject here
+                    summary: summaryLines.join('\n'),
+                }),
+            });
+        } catch (_) {
+            // ignore ping failure
+        }
+    }
+
+
     async function handleSubmit(e) {
         e.preventDefault();
         setSubmitting(true);
@@ -83,6 +106,9 @@ export default function ContactForm() {
             if (!res.ok) {
                 throw new Error(`RPC failed (${res.status}): ${body?.message || res.statusText}`);
             }
+
+            //Fire admin ping
+            notifyAdminContactPing(payload);
 
             setMsg('Köszönjük! Hamarosan jelentkezünk.');
             form.reset();
