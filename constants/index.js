@@ -175,25 +175,29 @@ const plusOptions = [
     {
         title: 'Látványterv',
         desc: 'Amennyiben választott szolgáltatásod nem tartalmazza, vagy utólag módosítanál a látvány terveken, lehetőséged van plusz szolgáltatásként kérni.',
-        priceOnline: 'Árajánlatkérés szükséges',
+        priceOnline: '',
         priceInPerson: '',
+        priceDefault: 'Árajánlatkérés szükséges',
     },
     {
         title: 'Tanácsadás',
         desc: 'Tanácsadás 60 és 120 perces időtartalommal választható.',
-        priceOnline: 'Online 20.000 Ft / óra',
-        priceInPerson: 'Személyesen 30.000 Ft / óra'
+        priceOnline: '20.000 Ft / óra',
+        priceInPerson: '30.000 Ft / óra',
+        priceDefault: '',
     },
     {
         title: 'Közös vásárlás',
         desc: 'Választott csomagodhoz járt bevásárló lista segítségével, ha szükségét érzed elmegyek veled beszerezni a bútorokat, burkolatokat és egyéb kiegészítőket, hogy segítsek a döntésekben.',
-        priceInPerson: 'Személyesen 17.500 Ft / alkalom'
+        priceInPerson: '17.500 Ft / alkalom',
+        priceDefault: '',
     },
     {
         title: 'Kiszállási díj',
         desc: '',
-        priceOnline: '20.000 Ft-tól / nap',
+        priceOnline: '',
         priceInPerson: '',
+        priceDefault: '20.000 Ft-tól / nap',
     },
 
 ];

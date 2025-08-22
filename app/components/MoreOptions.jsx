@@ -72,6 +72,7 @@ export default function MoreOptions() {
                                             desc={it.desc}
                                             priceOnline={it.priceOnline}
                                             priceInPerson={it.priceInPerson}
+                                            priceDefault={it.priceDefault}
                                         />
                                     ))}
                             </motion.ul>
@@ -83,7 +84,7 @@ export default function MoreOptions() {
     );
 }
 
-function AccordionItem({ index, title, desc, priceOnline, priceInPerson }) {
+function AccordionItem({ index, title, desc, priceOnline, priceInPerson, priceDefault }) {
     const [open, setOpen] = useState(false);
     const uid = useId(); // stabil, egyedi azonosító az ARIA-hoz
     const panelId = `accordion-panel-${index}-${uid}`;
@@ -130,7 +131,7 @@ function AccordionItem({ index, title, desc, priceOnline, priceInPerson }) {
                     >
                         <div className="px-4 pb-4 md:pb-5 text-sm md:text-base leading-relaxed text-stone-700">
                             {desc && <p className="mb-2">{desc}</p>}
-                            {(priceOnline || priceInPerson) && (
+                            {(priceOnline || priceInPerson || priceDefault) && (
                                 <dl className="mt-3 space-y-1">
                                     {priceOnline && (
                                         <div className="flex gap-2">
@@ -142,6 +143,11 @@ function AccordionItem({ index, title, desc, priceOnline, priceInPerson }) {
                                         <div className="flex gap-2">
                                             <dt className="font-medium">Személyes:</dt>
                                             <dd>{priceInPerson}</dd>
+                                        </div>
+                                    )}
+                                    {priceDefault && (
+                                        <div className="flex gap-2">
+                                            <dd>{priceDefault}</dd>
                                         </div>
                                     )}
                                 </dl>

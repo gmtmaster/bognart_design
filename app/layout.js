@@ -20,6 +20,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
       <html lang="hu" className="scroll-smooth">
+
+      <head>
+      <script defer src="https://cloud.umami.is/script.js" data-website-id="39555d77-4acc-4018-bc4b-426d0b7d75a9"></script>
+
+      </head>
       <body className="relative min-h-dvh antialiased">
       {/* Global fixed background (clipped) */}
       <div
@@ -43,6 +48,7 @@ export default function RootLayout({ children }) {
       {children}
       <CookieConsent />
       </body>
+
       </html>
   );
 }
