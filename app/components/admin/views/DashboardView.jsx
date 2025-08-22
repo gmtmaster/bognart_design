@@ -1,6 +1,6 @@
 "use client";
 
-import StatCard from "@/components/admin/StatCard";
+import StatCard from "@/app/components/admin/StatCard";
 
 export default function DashboardView({ counts }) {
     return (
