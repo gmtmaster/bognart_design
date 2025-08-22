@@ -3,8 +3,8 @@
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { supabase } from "@/lib/supabaseClientPublic";
-import LoginForm from "@/components/admin/LoginForm";
+import { supabase } from "@/lib/supabaseClient";
+import LoginForm from "@/app/components/admin/LoginForm";
 
 
 export default function AuthGate({ children }) {

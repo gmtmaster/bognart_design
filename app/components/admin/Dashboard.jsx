@@ -21,7 +21,7 @@ import DashboardView from "@/app/components/admin/views/DashboardView";
 import MessagesView from "@/app/components/admin/views/MessagesView";
 import InquiriesView from "@/app/components/admin/views/InquiriesView";
 
-export default function Dashboard({ session }) {
+export default function Dashboard({ session, onSignOut }) {
     const [inquiries, setInquiries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [query, setQuery] = useState("");
@@ -147,7 +147,7 @@ export default function Dashboard({ session }) {
 
             {/* Main content area */}
             <div className="flex-1 flex flex-col">
-                <Topbar user={session?.user} />
+                <Topbar user={session?.user} onSignOut={onSignOut} />
 
                 <main className="flex-1 overflow-y-auto p-6 space-y-6">
                     {activeView === "dashboard" && <DashboardView counts={counts}/>}
