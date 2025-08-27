@@ -80,7 +80,7 @@ export default function Footer() {
                     <p>
                         developed by{" "}
                         <a
-                            href="https://adamlekrinszki.com/"
+                            href="https://adamlekrinszki.vercel.app/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="underline decoration-dotted hover:text-stone-700"
