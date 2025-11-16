@@ -55,17 +55,6 @@ function PriceRequest() {
         return Array.isArray(json) ? json[0] : json;
     }
 
-    async function notifyAdmin(summary) {
-        try {
-            await fetch('/api/inquiry-admin-ping', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ summary }),
-            });
-        } catch (_) {
-            // Don't block UX on email failure; just ignore.
-        }
-    }
 
     async function handleSubmit(e) {
         console.log('[submit] handler entered');
@@ -230,7 +219,19 @@ function PriceRequest() {
                 `Forrás: ${refVal || '—'}`,
             ];
 
-            notifyAdmin(summaryLines.join('\n'));
+
+            // ----- 4.1) Send auto-email via Resend -----
+            await fetch("/api/inquiry-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: nameVal,
+                    email: emailVal,
+                    phone: phoneVal,
+                    packageName: packageVal,
+                    message: messageVal
+                })
+            });
 
             // ----- 5) UX success -----
             setSubmitMsg('Köszönjük! Az árajánlatkérésedet megkaptuk. Hamarosan jelentkezünk.');

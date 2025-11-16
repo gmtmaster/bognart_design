@@ -78,14 +78,14 @@ export default function Footer() {
                         © {year} BOGNART. Minden jog fenntartva.
                     </p>
                     <p>
-                        developed by{" "}
+                        powered by{" "}
                         <a
-                            href="https://adamlekrinszki.vercel.app/"
+                            href="https://lasolutions.hu/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="underline decoration-dotted hover:text-stone-700"
                         >
-                            Adam &lt;/ Lekrinszki &gt;
+                            LA Solutions
                         </a>
                     </p>
                 </div>

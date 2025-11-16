@@ -19,11 +19,12 @@ import { ACCENT } from "@/app/components/admin/constants";
 import { supabase } from "@/lib/supabaseClient";
 import { formatDate } from "@/app/components/admin/utils";
 import Field from "@/app/components/admin/Field";
-import StatusPill from "@/app/components/admin/StatusPill";
+import BognartReplyUploader from "@/app/components/admin/BognartReplyUploader";
+
 
 export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToast }) {
     const [sending, setSending] = useState(false);
-    const [reply, setReply] = useState({ subject: "", message: "" });
+    const [reply, setReply] = useState({ subject: "", message: "", pdfFile: null });
     const [status, setStatus] = useState(inquiry?.status || "new");
 
     useEffect(() => {
@@ -47,18 +48,28 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
 
     const sendEmail = async () => {
         if (!inquiry) return;
-        if (!inquiry.email) {
-            onToast?.({ type: "error", message: "Hiányzik az ügyfél e-mail címe." });
-            return;
-        }
 
         setSending(true);
         try {
+            const attachments = [];
+
+            if (reply.pdfFile) {
+                const arrayBuffer = await reply.pdfFile.arrayBuffer();
+                const base64 = Buffer.from(arrayBuffer).toString("base64");
+
+                attachments.push({
+                    filename: reply.pdfFile.name || "csatolt.pdf",
+                    content: base64,
+                    contentType: "application/pdf",
+                });
+            }
+
             const payload = {
                 to: inquiry.email,
                 subject: reply.subject?.trim() || `Re: ${inquiry.subject ?? "Árajánlatkérés"}`,
                 message: reply.message || "",
                 footerNote: "Ha kérdése van, erre a levélre válaszolhat.",
+                attachments,
             };
 
             const r = await fetch("/api/admin/reply", {
@@ -68,12 +79,12 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
             });
 
             if (!r.ok) throw new Error("Send failed");
+
             onToast?.({ type: "success", message: "Válasz elküldve az ügyfélnek." });
             onStatusChange?.("answered");
 
             await supabase.from("outbox_emails").insert({
                 inquiry_id: inquiry?.id ?? null,
-                contact_id: null,
                 to_email: payload.to,
                 subject: payload.subject,
                 message: payload.message,
@@ -86,6 +97,7 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
             setSending(false);
         }
     };
+
 
     return (
         <AnimatePresence>
@@ -226,10 +238,12 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
                                         placeholder="Üzenet szövege…"
                                     />
                                     <div className="flex items-center justify-between">
-                                        <label className="inline-flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                                            <input type="checkbox" className="rounded" />
-                                            Ajánlat csatolása (PDF)
-                                        </label>
+                                        <BognartReplyUploader
+                                            onChange={(file) =>
+                                                setReply((r) => ({ ...r, pdfFile: file }))
+                                            }
+                                        />
+
                                         <button
                                             disabled={sending}
                                             onClick={sendEmail}
