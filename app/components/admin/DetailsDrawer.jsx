@@ -24,15 +24,16 @@ import BognartReplyUploader from "@/app/components/admin/BognartReplyUploader";
 
 export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToast }) {
     const [sending, setSending] = useState(false);
-    const [reply, setReply] = useState({ subject: "", message: "", pdfFile: null });
+    const [reply, setReply] = useState({ subject: "", message: "", pdfFiles:[] });
     const [status, setStatus] = useState(inquiry?.status || "new");
 
     useEffect(() => {
         if (inquiry) {
-            setReply({
+            setReply((r) => ({
+                ...r,
                 subject: `Re: ${inquiry.subject ?? "Árajánlatkérés"}`,
                 message: "",
-            });
+            }));
             setStatus(inquiry.status || "new");
         }
     }, [inquiry]);
@@ -53,15 +54,17 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
         try {
             const attachments = [];
 
-            if (reply.pdfFile) {
-                const arrayBuffer = await reply.pdfFile.arrayBuffer();
-                const base64 = Buffer.from(arrayBuffer).toString("base64");
+            if (reply.pdfFiles?.length) {
+                for (const f of reply.pdfFiles) {
+                    const arrayBuffer = await f.arrayBuffer();
+                    const base64 = Buffer.from(arrayBuffer).toString("base64");
 
-                attachments.push({
-                    filename: reply.pdfFile.name || "csatolt.pdf",
-                    content: base64,
-                    contentType: "application/pdf",
-                });
+                    attachments.push({
+                        filename: f.name || "csatolt.pdf",
+                        content: base64,
+                        contentType: "application/pdf",
+                    });
+                }
             }
 
             const payload = {
@@ -239,8 +242,8 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
                                     />
                                     <div className="flex items-center justify-between">
                                         <BognartReplyUploader
-                                            onChange={(file) =>
-                                                setReply((r) => ({ ...r, pdfFile: file }))
+                                            onChange={(files) =>
+                                                setReply((r) => ({ ...r, pdfFiles: files }))
                                             }
                                         />
 
