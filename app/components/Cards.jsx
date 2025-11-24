@@ -89,8 +89,17 @@ export default function Cards() {
                                     className="h-72 w-full object-cover transition duration-300 group-hover:brightness-75"
                                 />
 
-                                {/* Overlay */}
-                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent p-6">
+                                {/* Overlay – mobilon mindig látható */}
+                                <div className="
+                                    absolute inset-0
+                                    opacity-0
+                                    group-hover:opacity-100
+                                    max-sm:opacity-100
+                                    transition duration-300
+                                    flex flex-col justify-end
+                                    bg-gradient-to-t from-black/60 to-transparent
+                                    p-6
+                                ">
                                     <h3 className="text-white text-2xl font-bold drop-shadow-md">
                                         {title}
                                     </h3>
@@ -98,6 +107,8 @@ export default function Cards() {
                                         {desc}
                                     </p>
                                 </div>
+
+
                             </a>
                         </motion.div>
                     ))}

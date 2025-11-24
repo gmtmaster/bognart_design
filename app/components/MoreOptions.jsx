@@ -73,6 +73,7 @@ export default function MoreOptions() {
                                             priceOnline={it.priceOnline}
                                             priceInPerson={it.priceInPerson}
                                             priceDefault={it.priceDefault}
+                                            price2={it.price2}
                                         />
                                     ))}
                             </motion.ul>
@@ -84,7 +85,7 @@ export default function MoreOptions() {
     );
 }
 
-function AccordionItem({ index, title, desc, priceOnline, priceInPerson, priceDefault }) {
+function AccordionItem({ index, title, desc, priceOnline, priceInPerson, priceDefault, price2 }) {
     const [open, setOpen] = useState(false);
     const uid = useId(); // stabil, egyedi azonosító az ARIA-hoz
     const panelId = `accordion-panel-${index}-${uid}`;
@@ -148,6 +149,11 @@ function AccordionItem({ index, title, desc, priceOnline, priceInPerson, priceDe
                                     {priceDefault && (
                                         <div className="flex gap-2">
                                             <dd>{priceDefault}</dd>
+                                        </div>
+                                    )}
+                                    {price2 && (
+                                        <div className="flex gap-2">
+                                            <dd>{price2}</dd>
                                         </div>
                                     )}
                                 </dl>
