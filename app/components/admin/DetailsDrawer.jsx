@@ -26,6 +26,8 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
     const [sending, setSending] = useState(false);
     const [reply, setReply] = useState({ subject: "", message: "", pdfFiles:[] });
     const [status, setStatus] = useState(inquiry?.status || "new");
+    const [emailHistory, setEmailHistory] = useState([]);
+
 
     useEffect(() => {
         if (inquiry) {
@@ -37,6 +39,23 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
             setStatus(inquiry.status || "new");
         }
     }, [inquiry]);
+
+    useEffect(() => {
+        if (!inquiry?.id) return;
+
+        const fetchHistory = async () => {
+            const { data, error } = await supabase
+                .from("outbox_emails")
+                .select("*")
+                .eq("inquiry_id", inquiry.id)
+                .order("sent_at", { ascending: false });
+
+            if (!error) setEmailHistory(data || []);
+        };
+
+        fetchHistory();
+    }, [inquiry]);
+
 
     const services = useMemo(() => {
         if (!inquiry) return [];
@@ -263,6 +282,34 @@ export default function DetailsDrawer({ inquiry, onClose, onStatusChange, onToas
                                     </div>
                                 </div>
                             </section>
+                            <section className="bg-gray-50 rounded-xl border border-gray-200 p-4">
+                                <h4 className="font-semibold mb-3">Korábban elküldött válaszok</h4>
+
+                                {emailHistory.length === 0 && (
+                                    <p className="text-sm text-gray-600">Ehhez az érdeklődéshez még nincs elküldött email.</p>
+                                )}
+
+                                <div className="space-y-4">
+                                    {emailHistory.map((mail) => (
+                                        <div key={mail.id} className="p-3 rounded-lg border bg-white">
+                                            <div className="text-xs text-gray-500">
+                                                {new Date(mail.sent_at).toLocaleString()}
+                                            </div>
+
+                                            <div className="font-medium">{mail.subject}</div>
+
+                                            <p className="text-sm text-gray-700 whitespace-pre-wrap mt-1">
+                                                {mail.message}
+                                            </p>
+
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                Címzett: {mail.to_email}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+
                         </div>
                     </div>
                 </motion.aside>

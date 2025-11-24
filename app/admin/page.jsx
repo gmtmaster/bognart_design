@@ -74,7 +74,7 @@ function LoginForm() {
         setSuccess("");
 
         // allowed admin emails
-        const allowed = ["csengebog@gmail.com", "adamlekrinszki@gmail.com"];
+        const allowed = ["info@bognart.com", "adamlekrinszki@gmail.com"];
         if (!allowed.includes(email)) {
             setError("Ez az e-mail nincs engedélyezve.");
             setLoading(false);

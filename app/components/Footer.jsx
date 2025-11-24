@@ -75,7 +75,7 @@ export default function Footer() {
                 {/* Bottom bar */}
                 <div className="mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs text-stone-500">
                     <p aria-label={`Copyright ${year}`}>
-                        © {year} BOGNART. Minden jog fenntartva.
+                        © {year} BOGNART Interior Design. Minden jog fenntartva.
                     </p>
                     <p>
                         powered by{" "}

@@ -23,7 +23,7 @@ export async function POST(req) {
             );
         }
 
-        const brandName = process.env.BRAND_NAME || 'BOGNART';
+        const brandName = process.env.BRAND_NAME || 'BOGNART Interior Design';
         const brandUrl  = process.env.BRAND_URL  || 'https://bognart.com';
 
         const html = buildReplyHtml({ brandName, brandUrl, subject, message, footerNote });

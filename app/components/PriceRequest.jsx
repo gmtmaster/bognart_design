@@ -263,42 +263,42 @@ function PriceRequest() {
                         {/* Név */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-stone-700">Név</label>
-                            <input name="name" id="name" type="text" placeholder="Írd be a neved"
+                            <input required name="name" id="name" type="text" placeholder="Írd be a neved"
                                    className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]" />
                         </div>
 
                         {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-stone-700">Email</label>
-                            <input name="email" id="email" type="email" placeholder="nev@email.hu"
+                            <input required name="email" id="email" type="email" placeholder="nev@email.hu"
                                    className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]" />
                         </div>
 
                         {/* Telefon */}
                         <div>
                             <label htmlFor="phone" className="mb-1 block text-sm font-medium text-stone-700">Telefon</label>
-                            <input name="phone" id="phone" type="tel" placeholder="+36 …"
+                            <input required name="phone" id="phone" type="tel" placeholder="+36 …"
                                    className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]" />
                         </div>
 
                         {/* Ingatlan elhelyezkedése */}
                         <div>
                             <label htmlFor="location" className="mb-1 block text-sm font-medium text-stone-700">Ingatlan elhelyezkedése</label>
-                            <input name="location" id="location" type="text" placeholder="Város, kerület / cím"
+                            <input required name="location" id="location" type="text" placeholder="Város, kerület / cím"
                                    className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]" />
                         </div>
 
                         {/* Ingatlan mérete */}
                         <div>
                             <label htmlFor="size" className="mb-1 block text-sm font-medium text-stone-700">Ingatlan mérete</label>
-                            <input name="size" id="size" type="text" placeholder="pl. 65 m²"
+                            <input required name="size" id="size" type="text" placeholder="pl. 65 m²"
                                    className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]" />
                         </div>
 
                         {/* Ingatlan állapota */}
                         <div>
                             <label htmlFor="condition" className="mb-1 block text-sm font-medium text-stone-700">Ingatlan állapota</label>
-                            <select name="condition" id="condition"
+                            <select required name="condition" id="condition"
                                     className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]">
                                 <option value="">Válassz…</option>
                                 <option>Új építésű ingatlan</option>
@@ -312,11 +312,13 @@ function PriceRequest() {
                         {/* Választott tervezési csomag */}
                         <div>
                             <label htmlFor="package" className="mb-1 block text-sm font-medium text-stone-700">Választott tervezési csomag</label>
-                            <select name="package" id="package"
+                            <select required name="package" id="package"
                                     className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]">
+
                                 <option value="">Válassz…</option>
                                 <option>Konzultáció</option>
                                 <option>Basic csomag</option>
+                                <option>Standard csomag</option>
                                 <option>Premium csomag</option>
                                 <option>Konyhatervezés</option>
                             </select>
@@ -330,6 +332,7 @@ function PriceRequest() {
                                     className="h-4 w-4 accent-[#CA8A8A]"
                                     checked={wantConsultation}
                                     onChange={(e) => setWantConsultation(e.target.checked)}
+                                    required
                                 />
                                 Tanácsadás
                             </label>
@@ -339,6 +342,7 @@ function PriceRequest() {
                                     className="h-4 w-4 accent-[#CA8A8A]"
                                     checked={wantPriceRequest}
                                     onChange={(e) => setWantPriceRequest(e.target.checked)}
+                                    required
                                 />
                                 Árajánlatkérés
                             </label>
@@ -353,6 +357,7 @@ function PriceRequest() {
                                 name="ref"                 // <-- important
                                 id="ref"
                                 className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
+                                required
                             >
                                 <option value="">Válassz…</option>
                                 <option>Google</option>
@@ -373,6 +378,7 @@ function PriceRequest() {
                                 id="message"
                                 placeholder="Miben segíthetünk?"
                                 className="w-full rounded-lg border border-stone-300 bg-stone-100 px-4 py-2 text-stone-800 placeholder-stone-400 focus:border-[#CA8A8A] focus:outline-none focus:ring-2 focus:ring-[#CA8A8A]"
+                                required
                             />
                         </div>
 
@@ -394,13 +400,13 @@ function PriceRequest() {
                                     className="mt-0.5 h-4 w-4"
                                 />
                                 <span>
-                  Elolvastam és elfogadom a{' '}
+                                    Elolvastam és elfogadom a{' '}
                                     <Link href="/policies/terms" className="font-medium text-[#CA8A8A] hover:text-[#AD4949] underline">
-                    Felhasználási feltételeket
-                  </Link>{' '} és az{' '}
+                                    Felhasználási feltételeket
+                                  </Link>{' '} és az{' '}
                                     <Link href="/policies/privacy" className="font-medium text-[#CA8A8A] hover:text-[#AD4949] underline">
-                    Adatvédelmi tájékoztatót
-                  </Link>.
+                                    Adatvédelmi tájékoztatót
+                                  </Link>.
                 </span>
                             </label>
                             <p className="mt-2 text-xs text-stone-500">Az űrlap beküldésével hozzájárulsz az adataid kezeléséhez.</p>

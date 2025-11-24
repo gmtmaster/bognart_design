@@ -24,7 +24,7 @@ export async function POST(req) {
         // EMAIL 2: admin értesítés
         await resend.emails.send({
             from: "BOGNART <info@bognart.com>",
-            to: "csengebog@gmail.com", //admin emailcim
+            to: "info@bognart.com", //admin emailcim
             subject: `Új árajánlat érkezett – ${name}`,
             html: buildAdminNotificationHtml(data)
         });
