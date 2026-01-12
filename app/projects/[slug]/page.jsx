@@ -10,21 +10,6 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }) {
     const project = getProject(params.slug);
-    if (!project) return {};
-
-    return {
-        title: `${project.title} — BOGNART`,
-        description: project.blurb,
-        openGraph: {
-            title: project.title,
-            description: project.blurb,
-            images: project.cover ? [{ url: project.cover }] : [],
-        },
-    };
-}
-
-export default function ProjectPage({ params }) {
-    const project = getProject(params.slug);
     if (!project) {
         return (
             <section className="py-16">
@@ -35,7 +20,7 @@ export default function ProjectPage({ params }) {
     {
         params,
         slug: params?.slug,
-        allSlugs: projects.map(p => p.slug),
+        allSlugs: getProjectParams().map(p => p.slug),
     },
     null,
     2
