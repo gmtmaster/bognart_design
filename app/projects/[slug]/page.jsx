@@ -1,4 +1,6 @@
-import Image from "next/image";
+export const dynamic = "force-dynamic";
+
+
 import { notFound } from "next/navigation";
 import { getProject, getProjectParams } from "@/lib/projects";
 import ProjectGalleryClient from "./ProjectGalleryClient";
