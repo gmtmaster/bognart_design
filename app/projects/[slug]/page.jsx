@@ -1,10 +1,8 @@
-export const dynamic = "force-dynamic";
-
-
 import { notFound } from "next/navigation";
 import { getProject, getProjectParams } from "@/lib/projects";
 import ProjectGalleryClient from "./ProjectGalleryClient";
 import Link from "next/link";
+
 
 export function generateStaticParams() {
     return getProjectParams();
@@ -13,6 +11,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
     const project = getProject(params.slug);
     if (!project) return {};
+
     return {
         title: `${project.title} — BOGNART`,
         description: project.blurb,
@@ -40,6 +39,7 @@ export default function ProjectPage({ params }) {
                             <p className="mt-3 text-stone-600 max-w-2xl">{project.blurb}</p>
                         )}
                     </div>
+
                     <Link
                         href="/#referenciak"
                         className="text-stone-600 hover:text-amber-700 underline underline-offset-4"
@@ -48,7 +48,6 @@ export default function ProjectPage({ params }) {
                     </Link>
                 </div>
 
-                {/* Animated gallery lives in a client component */}
                 <ProjectGalleryClient images={project.images} title={project.title} />
             </div>
         </section>
