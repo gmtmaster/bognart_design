@@ -33,7 +33,7 @@ const cards = [
     },
     {
         title: "Modern Letisztultság – Természetes Elegancia",
-        img: "/pr3.jpg",
+        img: "/pr3.png",
         slug: "project-3",
         desc: "A világos tónusok, a fa részletek és a puha textúrák meleg, hívogató légkört teremtenek, miközben a praktikus térszervezés a modern élet minden igényét kiszolgálja.",
     },
